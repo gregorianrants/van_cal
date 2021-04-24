@@ -1,5 +1,5 @@
 import React from 'react'
-import {eventsGeometry}
+import {configure}
     from './eventGeometry/eventGeometry'
 import {TimePeriod} from "./eventGeometry/groupEvents";
 
@@ -12,8 +12,8 @@ import {TimePeriod} from "./eventGeometry/groupEvents";
 
 
 
-function Event({top: topInitial, bottom, left, right}) {
-    const [top,setTop] = React.useState(topInitial)
+function Event({top, bottom, left, right}) {
+
     const [mouseDown,setMouseDown] = React.useState(false)
     const topPos = React.useRef(null)
     return (
@@ -25,7 +25,7 @@ function Event({top: topInitial, bottom, left, right}) {
             }}
 
 
-             onMouseDown={(e)=>{
+            /* onMouseDown={(e)=>{
                  const el = e.target
                  topPos.current = el.getBoundingClientRect().top
                  setTop(el.getBoundingClientRect().top)
@@ -36,19 +36,20 @@ function Event({top: topInitial, bottom, left, right}) {
              onMouseMove={(e)=>{
                  if(mouseDown){
 
-                     /*console.log(`top ${top}`)
+                     /!*console.log(`top ${top}`)
                      console.log(`moevement ${e.movementY}`)
-                     setTop(top=>top+e.movementY)*/
+                     setTop(top=>top+e.movementY)*!/
                  }
 
-             }}
+             }}*/
         >
 
         </div>
     )
 }
 
-function Events({events}){
+function Events({events,height,border}){
+    const eventsGeometry = configure(height,border)
     console.log(eventsGeometry(events))
     return(
         eventsGeometry(events)
@@ -110,7 +111,7 @@ export default function Day() {
     return (
         <div className='day' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
 
-            <Events events={events}/>
+            <Events events={events} height={height} border={border}/>
             <Hours height={height} border={border}/>
         </div>
 
