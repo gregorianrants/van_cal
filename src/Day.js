@@ -57,10 +57,18 @@ function Events({events}){
     )
 }
 
-function Hours() {
+function Hours({height,border}) {
     return (
         [...Array(24).keys()]
-            .map((index) => <div className='hour' key={index} data-hour={String(index)}></div>)
+            .map((index) => <div className='hour'
+                                 key={index}
+                                 data-hour={String(index)}
+            style={{
+                height: `${height}px`,
+                borderTop: index===0 ? `${border}px solid grey` : `0`,
+                borderBottom: `${border}px solid grey`,
+            }}
+            />)
     )
 }
 
@@ -93,7 +101,8 @@ export default function Day() {
         }))
     }
 
-
+    const height=20
+    const border=0.2
 
 
 
@@ -102,7 +111,7 @@ export default function Day() {
         <div className='day' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
 
             <Events events={events}/>
-            <Hours />
+            <Hours height={height} border={border}/>
         </div>
 
     )
