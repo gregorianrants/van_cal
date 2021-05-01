@@ -6,7 +6,7 @@ export function configure(height,border){
         const minutes = (time) => time - hours(time)
 
         return (time) => {
-            console.log('height', height)
+
             return hours(time) * height + (hours(time) + 1) * border + height * minutes(time)
         }
     })(height,border)

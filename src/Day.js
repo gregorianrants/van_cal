@@ -4,56 +4,110 @@ import {configure}
 import {TimePeriod} from "./eventGeometry/groupEvents";
 
 
+function getNumPixels(str){
+    return str.slice(0,str.length-2)*1
+}
+
+function addToPixels(withPx,num){
+    return (getNumPixels(withPx)*1 + num)+'px'
+}
+
+
+function eventReducer(state,action){
+    const {top,bottom,mouseDown}=state
+    const {type,movementY}=action
+    if(type==='mouseDown'){
+        return{
+            ...state,
+            mouseDown: true,
+            zIndex: 1000,
+        }
+    }
+    else if(type==='mouseMove'){
+        return {
+            ...state,
+            top: addToPixels(top,movementY),
+            bottom: addToPixels(bottom, -movementY)
+        }
+    }
+    else if(type==='mouseUp'){
+        return {
+            ...state,
+            mouseDown: false
+        }
+    }
+}
+
+const getTime=(position,height)=>{
+    return (position/height)*24
+}
+
+
+function Event({top: initialTop, bottom: initialBottom, left, right,updateEvent}) {
+    const [state,dispatch] = React.useReducer(eventReducer,{
+        bottom: initialBottom,
+        top: initialTop,
+        mouseDown: false,
+        zIndex: 100
+    })
+
+
+    const handleMouseDown=(e)=>{
+        console.log('down')
+        dispatch({type: 'mouseDown'})
+    }
+
+    const handleMouseMove=(e)=>{
+        if(state.mouseDown){
+            dispatch({type: 'mouseMove',movementY: e.movementY})
+        }
+    }
+
+    const handleMouseUp=(e)=>{
+        console.log('up')
+        dispatch({type: 'mouseUp'})
+        updateEvent(top,bottom)
+    }
 
 
 
-
-
-
-
-
-function Event({top, bottom, left, right}) {
-
-    const [mouseDown,setMouseDown] = React.useState(false)
-    const topPos = React.useRef(null)
+    const {top,bottom,zIndex} = state
     return (
         <div className='event'
             style={{
                 backgroundColor: 'red',
-                zIndex: 100,
+                zIndex: zIndex,
                 top,bottom,left,right
             }}
-
-
-            /* onMouseDown={(e)=>{
-                 const el = e.target
-                 topPos.current = el.getBoundingClientRect().top
-                 setTop(el.getBoundingClientRect().top)
-                 setMouseDown(true)
-
-             }}
-
-             onMouseMove={(e)=>{
-                 if(mouseDown){
-
-                     /!*console.log(`top ${top}`)
-                     console.log(`moevement ${e.movementY}`)
-                     setTop(top=>top+e.movementY)*!/
-                 }
-
-             }}*/
+             onMouseDown={handleMouseDown}
+             onMouseMove={handleMouseMove}
+             onMouseUp={handleMouseUp}
         >
-
         </div>
     )
 }
 
-function Events({events,height,border}){
+function Events({events,height,border,updateEvent}){
     const eventsGeometry = configure(height,border)
-    console.log(eventsGeometry(events))
+
+    const updateEventWithIdF = (id)=>(
+        (top,bottom)=>{
+            let start = getTime(getNumPixels(top),20*24)
+            let end = getTime(20*24 - getNumPixels(bottom),20*24)
+            updateEvent(id,{start,end})
+        }
+    )
+
     return(
         eventsGeometry(events)
-            .map((evnt,i)=><Event {...evnt} key={evnt.id}/>)
+            .map(
+                (evnt,i)=><Event
+                    {...evnt}
+                    key={evnt.id}
+                    updateEvent={updateEventWithIdF(evnt.id)}
+                    height={height}
+                />
+            )
 
     )
 }
@@ -72,6 +126,7 @@ function Hours({height,border}) {
             />)
     )
 }
+
 
 export default function Day() {
     const [events,setEvents]=React.useState([
@@ -94,24 +149,32 @@ export default function Day() {
         setEvents(events=>[...events,new TimePeriod(startHour,end)])
     }
 
+    const height=20
+    const border=0.2
+
     const updateEvent=(id,{start,end})=>{
         setEvents(events=>events.map(event=>{
             if (event.id===id){
-                return {...event,start,end}
+                return new TimePeriod(start,end)
+            }
+            else{
+                return {...event}
             }
         }))
     }
 
-    const height=20
-    const border=0.2
+
 
 
 
 
     return (
-        <div className='day' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+        <div className='day'
+             /*onMouseDown={handleMouseDown}
+             onMouseUp={handleMouseUp}*/
+        >
 
-            <Events events={events} height={height} border={border}/>
+            <Events events={events} height={height} border={border} updateEvent={updateEvent}/>
             <Hours height={height} border={border}/>
         </div>
 
