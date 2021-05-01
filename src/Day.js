@@ -1,7 +1,7 @@
 import React from 'react'
 import {configure}
     from './eventGeometry/eventGeometry'
-import {TimePeriod} from "./eventGeometry/groupEvents";
+import {timePeriod} from "./eventGeometry/groupEvents";
 
 
 function getNumPixels(str){
@@ -53,7 +53,6 @@ function Event({top: initialTop, bottom: initialBottom, left, right,updateEvent}
 
 
     const handleMouseDown=(e)=>{
-        console.log('down')
         dispatch({type: 'mouseDown'})
     }
 
@@ -64,9 +63,10 @@ function Event({top: initialTop, bottom: initialBottom, left, right,updateEvent}
     }
 
     const handleMouseUp=(e)=>{
-        console.log('up')
-        dispatch({type: 'mouseUp'})
-        updateEvent(top,bottom)
+        if(state.mouseDown){
+            dispatch({type: 'mouseUp'})
+            updateEvent(top,bottom)
+        }
     }
 
 
@@ -130,12 +130,12 @@ function Hours({height,border}) {
 
 export default function Day() {
     const [events,setEvents]=React.useState([
-        new TimePeriod(10, 14),
-        new TimePeriod(10, 12),
-        new TimePeriod(12.25, 13.75),
-        new TimePeriod(15, 17.25),
-        new TimePeriod(15, 17),
-        new TimePeriod(18, 20)
+        timePeriod(10, 14),
+        timePeriod(10, 12),
+        timePeriod(12.25, 13.75),
+        timePeriod(15, 17.25),
+        timePeriod(15, 17),
+        timePeriod(18, 20)
     ])
 
     const [startHour,setStartHour] = React.useState(null);
@@ -146,7 +146,10 @@ export default function Day() {
 
     const handleMouseUp=(e)=>{
         const end = e.target.dataset.hour * 1
-        setEvents(events=>[...events,new TimePeriod(startHour,end)])
+        if(startHour <end){
+            setEvents(events=>[...events,timePeriod(startHour,end)])
+        }
+
     }
 
     const height=20
@@ -155,7 +158,7 @@ export default function Day() {
     const updateEvent=(id,{start,end})=>{
         setEvents(events=>events.map(event=>{
             if (event.id===id){
-                return new TimePeriod(start,end)
+                return timePeriod(start,end)
             }
             else{
                 return {...event}
@@ -170,8 +173,8 @@ export default function Day() {
 
     return (
         <div className='day'
-             /*onMouseDown={handleMouseDown}
-             onMouseUp={handleMouseUp}*/
+             onMouseDown={handleMouseDown}
+             onMouseUp={handleMouseUp}
         >
 
             <Events events={events} height={height} border={border} updateEvent={updateEvent}/>

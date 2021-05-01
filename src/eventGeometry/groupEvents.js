@@ -5,10 +5,11 @@ function idGenerator() {
 
 let id = idGenerator()
 
-export function TimePeriod(start, end) {
-    this.start = start;
-    this.end = end;
-    this.id = id();
+export function timePeriod(start, end) {
+    return {
+        start: start,
+        end: end,
+        id: id()}
 }
 
 /*let events = [
@@ -33,7 +34,7 @@ function getEnd(set) {
 }
 
 function asPeriod(set) {
-    return new TimePeriod(getStart(set), getEnd(set))
+    return timePeriod(getStart(set), getEnd(set))
 }
 
 function overlaps(period1, period2) {
