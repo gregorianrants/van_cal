@@ -79,10 +79,6 @@ export default function Day() {
         dispatch({type: 'mouseUp'})
     }
 
-
-
-
-
     const height = 20
     const border = 0.2
 
@@ -95,11 +91,6 @@ export default function Day() {
             }
         }))
     }
-
-
-
-
-
 
     const {top,bottom,left,right} = state
 
