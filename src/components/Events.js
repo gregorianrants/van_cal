@@ -8,6 +8,7 @@ import React from "react";
 export default function Events({events, height, border, updateEvent}) {
     const eventsGeometry = configure(height, border)
 
+    //TODO super confusing changing this function up chain consider refactor
     const updateEventWithIdF = (id) => (
         (top, bottom) => {
             let start = getTime(getNumPixels(top), 20 * 24)

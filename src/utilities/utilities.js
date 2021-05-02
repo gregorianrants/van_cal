@@ -3,7 +3,7 @@ export const getTime = (position, height) => {
 }
 
 export function getNumPixels(str) {
-    return str.slice(0, str.length - 2) * 1
+    return String(str).slice(0, str.length - 2) * 1
 }
 
 export function addToPixels(withPx, num) {

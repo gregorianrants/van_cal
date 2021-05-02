@@ -1,78 +1,45 @@
 import React from "react";
-import {addToPixels} from "../utilities/utilities";
-
-
-/*
-function eventReducer(state, action) {
-    const {top, bottom, mouseDown} = state
-    const {type, movementY, id} = action
-    if (type === 'mouseDown') {
-        return {
-            ...state,
-            id: id,
-            mouseDown: true,
-            zIndex: 1000,
-        }
-    } else if (type === 'mouseMove') {
-        return {
-            ...state,
-            top: addToPixels(top, movementY),
-            bottom: addToPixels(bottom, -movementY)
-        }
-    } else if (type === 'mouseUp') {
-        return {
-            ...state,
-            mouseDown: false
-        }
-    }
-}
-*/
+import {addToPixels, getNumPixels, getTime} from "../utilities/utilities";
+import useDrag from "./useDrag";
 
 
 
-export default function Event({
-                                 /* top: initialTop,
-                   bottom: initialBottom,*/top,bottom,
-                   left,
-                   right,id,
-    backgroundColor='red',
-                   updateEvent
-               }) {
-    /*const [state, dispatch] = React.useReducer(eventReducer, {
-        bottom: initialBottom,
-        top: initialTop,
-        mouseDown: false,
-        zIndex: 100
-    })*/
+export default function Event({top: initialTop,
+                                  bottom: initialBottom,
+                                  left,
+                                  right, id,
+                                  backgroundColor = 'red',
+                                  updateEvent,
+                                    height
+                              }) {
 
-   /* const handleMouseDown = (e) => {
-        dispatch({type: 'mouseDown'})
+    const [top,setTop]= React.useState(initialTop)
+    const [bottom,setBottom] = React.useState(initialBottom)
+    let topRef = React.useRef(initialTop)
+    let bottomRef = React.useRef(initialBottom)
+
+    const onMouseMove=(movementY)=>{
+        setTop(top =>addToPixels(top, movementY))
+        setBottom(bottom => addToPixels(bottom, - movementY))
     }
 
-    const handleMouseMove = (e) => {
-        if (state.mouseDown) {
-            dispatch({type: 'mouseMove', movementY: e.movementY})
-        }
+    const onMouseUp=(totalTranslationY)=>{
+       updateEvent(addToPixels(initialTop,totalTranslationY),
+           addToPixels(initialBottom,-totalTranslationY))
     }
-*/
-    /*const handleMouseUp = (e) => {
 
-    }*/
+    const onMouseDown = useDrag(onMouseMove,onMouseUp)
 
-
-    /*const {top, bottom, zIndex} = state*/
     return (
         <div data-component={'event'}
              data-id={id}
-            className='event'
+             className='event'
+             onMouseDown={onMouseDown}
              style={{
                  backgroundColor: backgroundColor,
-                /* zIndex: zIndex,*/
+                 /* zIndex: zIndex,*/
                  top, bottom, left, right
              }}
-             /*onMouseDown={handleMouseDown}
-             onMouseMove={handleMouseMove}*/
-            /*onMouseUp={handleMouseUp}*/
         >
         </div>
     )
