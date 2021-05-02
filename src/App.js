@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Day from './Day'
+import Day from './components/Day'
 
 function App() {
   return (
