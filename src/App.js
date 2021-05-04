@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Week from './components/Day'
+import Week from './components/Week'
 
 function App() {
   return (

@@ -6,13 +6,8 @@ html {
   box-sizing: inherit;
 }
 
-
-
-
-.event{
-  position: absolute;
-  border: 0.5px solid white;
-  border-top: 0.5px solid transparent;
-  border-bottom: 0.5px solid transparent;
-  background-color: red;
+body{
+  --border-color-light: lightgrey;
 }
+
+

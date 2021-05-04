@@ -7,11 +7,10 @@ import Hours from "./Hours";
 import styled from 'styled-components'
 
 const DayStyled = styled.div`
-  margin: 20px;
   position: relative;
   width: min-content;
-  border-left: 0.1px solid lightgrey;
-  border-right: 0.1px solid grey;
+  border-left: 0.1px solid var(--border-color-light);
+  border-right: 0.1px solid var(--border-color-light);
 `
 
 export default function Day() {
