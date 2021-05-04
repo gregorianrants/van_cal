@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import settingsContext from './Contexts'
 
 
 const HourStyled = styled.div` 
@@ -12,10 +13,11 @@ const HourStyled = styled.div`
     
 `
 
-/*border-top: ${props=>props.key===0 ? `${props.border}px solid grey` : 0};
-    border-bottom: ${props=>`${props.border}px solid grey`};*/
 
-export default function Hours({height, border}) {
+export default function Hours() {
+    const {borderWidth,hourHeight}=React.useContext(settingsContext)
+
+
     return (
         <div>
             {[...Array(24).keys()]
@@ -23,21 +25,9 @@ export default function Hours({height, border}) {
                         <HourStyled
                             key={index}
                             data-hour={String(index)}
-                            height={height}
-                            border={border}
+                            height={hourHeight}
+                            border={borderWidth}
                         />
-
-
-                    /* <div className='hour'
-                            key={index}
-                            data-hour={String(index)}
-                            style={{
-                                height: `${height}px`,
-                                borderTop: index === 0 ? `${border}px solid grey` : `0`,
-                                borderBottom: `${border}px solid grey`,
-                            }}
-                />
-                    */
                 )}
         </div>
 

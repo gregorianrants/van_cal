@@ -1,5 +1,6 @@
 import Day from './Day'
 import styled from "styled-components";
+import HourTicks from "./HourTicks";
 
 const WeekStyled = styled.div`
 display: flex;
@@ -10,10 +11,13 @@ display: flex;
 
 export default function Week(){
     return(
-        <WeekStyled>
-            {[...Array(7).keys()]
-                .map(key=><Day />)}
-        </WeekStyled>
+
+            <WeekStyled>
+                <HourTicks/>
+                {[...Array(7).keys()]
+                    .map(key=><Day />)}
+            </WeekStyled>
+
 
     )
 }
