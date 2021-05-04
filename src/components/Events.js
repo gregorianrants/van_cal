@@ -13,8 +13,8 @@ export default function Events({events,updateEvent}) {
     //TODO super confusing changing this function up chain consider refactor
     const updateEventWithIdF = (id) => (
         (top, bottom) => {
-            let start = getTime(getNumPixels(top), 20 * 24)
-            let end = getTime(20 * 24 - getNumPixels(bottom), 20 * 24)
+            let start = getTime(getNumPixels(top), hourHeight * 24)
+            let end = getTime(hourHeight * 24 - getNumPixels(bottom), hourHeight * 24)
             updateEvent(id, {start, end})
         }
     )
