@@ -14,7 +14,7 @@ const HourStyled = styled.div`
 `
 
 
-export default function Hours() {
+export default function Hours({className}) {
     const {borderWidth,hourHeight}=React.useContext(settingsContext)
 
 
@@ -27,6 +27,7 @@ export default function Hours() {
                             data-hour={String(index)}
                             height={hourHeight}
                             border={borderWidth}
+                            className={className}
                         />
                 )}
         </div>

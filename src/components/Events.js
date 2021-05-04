@@ -4,9 +4,11 @@ import {getTime,getNumPixels} from "../utilities/utilities";
 
 import {configure} from "../eventGeometry/eventGeometry";
 import React from "react";
+import settingsContext from "./Contexts";
 
-export default function Events({events, height, border, updateEvent}) {
-    const eventsGeometry = configure(height, border)
+export default function Events({events,updateEvent}) {
+    const {borderWidth,hourHeight}=React.useContext(settingsContext)
+    const eventsGeometry = configure(hourHeight, borderWidth)
 
     //TODO super confusing changing this function up chain consider refactor
     const updateEventWithIdF = (id) => (
@@ -24,7 +26,6 @@ export default function Events({events, height, border, updateEvent}) {
                     {...evnt}
                     key={evnt.id}
                     updateEvent={updateEventWithIdF(evnt.id)}
-                    height={height}
                 />
             )
 

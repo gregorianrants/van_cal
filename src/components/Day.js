@@ -5,6 +5,7 @@ import {timePeriod} from "../eventGeometry/groupEvents";
 import Events from './Events'
 import Hours from "./Hours";
 import styled from 'styled-components'
+import settingsContext from "./Contexts";
 
 const DayStyled = styled.div`
   position: relative;
@@ -14,6 +15,8 @@ const DayStyled = styled.div`
 `
 
 export default function Day() {
+    const {borderWidth,hourHeight}=React.useContext(settingsContext)
+
     const [events, setEvents] = React.useState([
         timePeriod(10, 14),
         timePeriod(10, 12),
@@ -32,8 +35,7 @@ export default function Day() {
    })*/
 
 
-    const height = 20
-    const border = 0.2
+
 
     const updateEvent = (id, {start, end}) => {
         setEvents(events => events.map(event => {
@@ -48,8 +50,8 @@ export default function Day() {
 
     return (
         <DayStyled>
-            <Events events={events} height={height} border={border} updateEvent={updateEvent}/>
-            <Hours height={height} border={border}/>
+                    <Events events={events} updateEvent={updateEvent}/>
+                    <Hours/>
         </DayStyled>
     )
 }

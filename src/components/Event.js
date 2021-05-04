@@ -2,6 +2,7 @@ import React from "react";
 import {addToPixels, getNumPixels, getTime} from "../utilities/utilities";
 import useDrag from "./useDrag";
 import styled from 'styled-components'
+import settingsContext from "./Contexts";
 
 
 
@@ -68,6 +69,7 @@ export default function Event({top: initialTop,
                                   updateEvent,
                                   height
                               }) {
+
 
     const [top,setTop]= React.useState(initialTop)
     const [bottom,setBottom] = React.useState(initialBottom)
