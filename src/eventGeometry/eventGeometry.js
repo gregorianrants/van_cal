@@ -1,12 +1,12 @@
 import groupEvents from './groupEvents'
 
 export function configure(height,border){
-    const position = ((height, border) => {
+    const position = (
+        (height, border) => {
         const hours = (time) => Math.floor(time)
         const minutes = (time) => time - hours(time)
 
         return (time) => {
-
             return hours(time) * height + (hours(time) + 1) * border + height * minutes(time)
         }
     })(height,border)
@@ -23,7 +23,7 @@ export function configure(height,border){
         return {
             ...event,
             top: String(position(start)) + 'px',
-            bottom: String(480 - position(end)) + 'px',
+            bottom: String((height*24) - position(end)) + 'px',
             left: String(left(colIndex,cols)) + '%',
             right: String(100 - (left(colIndex,cols) + widthOfCol(cols))) + '%'
         }

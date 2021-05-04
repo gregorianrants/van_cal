@@ -6,7 +6,7 @@ import SettingsContext from "./components/Contexts";
 const settingsValue =
 {
     borderWidth: 1,
-    hourHeight: 20
+    hourHeight: 30
 }
 
 
