@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import Day from './components/Day'
+import Week from './components/Day'
 
 function App() {
   return (
     <div className="App">
-      <Day />
+     <Week/>
 
     </div>
   );

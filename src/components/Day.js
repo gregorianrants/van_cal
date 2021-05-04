@@ -4,8 +4,15 @@ import {configure}
 import {timePeriod} from "../eventGeometry/groupEvents";
 import Events from './Events'
 import Hours from "./Hours";
+import styled from 'styled-components'
 
-
+const DayStyled = styled.div`
+  margin: 20px;
+  position: relative;
+  width: min-content;
+  border-left: 0.1px solid lightgrey;
+  border-right: 0.1px solid grey;
+`
 
 export default function Day() {
     const [events, setEvents] = React.useState([
@@ -41,9 +48,11 @@ export default function Day() {
 
 
     return (
-        <div className='day'>
+        <DayStyled>
             <Events events={events} height={height} border={border} updateEvent={updateEvent}/>
             <Hours height={height} border={border}/>
-        </div>
+        </DayStyled>
     )
 }
+
+
