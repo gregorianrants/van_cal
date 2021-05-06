@@ -31,12 +31,6 @@ const TickValuesStyled = styled.div`
   }
 `;
 
-
-
-
-
-
-
 function TickValues(){
     const {borderWidth,hourHeight}=React.useContext(settingsContext)
 

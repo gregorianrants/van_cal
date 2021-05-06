@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Week from './components/Week'
+import Calendar from './components/Calendar'
 import SettingsContext from "./components/Contexts";
 
 const settingsValue =
@@ -19,7 +19,7 @@ function App() {
     return (
     <div className="App">
         <SettingsContext.Provider value={settingsValue}>
-            <Week/>
+            <Calendar/>
         </SettingsContext.Provider>
     </div>
   );

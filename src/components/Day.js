@@ -9,9 +9,13 @@ import settingsContext from "./Contexts";
 
 const DayStyled = styled.div`
   position: relative;
-  flex: 1 0 100px;
-  border-left: 0.1px solid var(--border-color-light);
-  border-right: 0.1px solid var(--border-color-light);
+  flex: 1 0 auto;
+  border-left: 1px solid var(--border-color-light);
+  
+  &:last-child{
+    border-right: 1px solid var(--border-color-light);
+  }
+  
 `
 
 
@@ -52,7 +56,6 @@ export default function Day() {
 
     return (
         <DayStyled>
-
                     <Events events={events} updateEvent={updateEvent}/>
                     <Hours/>
         </DayStyled>
