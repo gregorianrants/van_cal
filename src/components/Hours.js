@@ -5,7 +5,6 @@ import settingsContext from './Contexts'
 
 const HourStyled = styled.div` 
     height:  ${props=> `${props.height}px`};
-    width: 150px;
     &:first-child{
      border-top: ${props=>`${props.border}px solid var(--border-color-light)`};
     }

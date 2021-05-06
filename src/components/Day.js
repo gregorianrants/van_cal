@@ -9,10 +9,12 @@ import settingsContext from "./Contexts";
 
 const DayStyled = styled.div`
   position: relative;
-  width: min-content;
+  flex: 1 0 100px;
   border-left: 0.1px solid var(--border-color-light);
   border-right: 0.1px solid var(--border-color-light);
 `
+
+
 
 export default function Day() {
     const {borderWidth,hourHeight}=React.useContext(settingsContext)
@@ -50,6 +52,7 @@ export default function Day() {
 
     return (
         <DayStyled>
+
                     <Events events={events} updateEvent={updateEvent}/>
                     <Hours/>
         </DayStyled>
