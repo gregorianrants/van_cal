@@ -5,10 +5,12 @@ import settingsContext from './Contexts'
 
 const HourStyled = styled.div` 
     height:  ${props=> `${props.height}px`};
-    &:first-child{
-     border-top: ${props=>`${props.border}px solid var(--border-color-light)`};
-    }
+    border-top: 1px solid lightgray;
+  
+  &:last-child{
     border-bottom: ${props=>`${props.border}px solid var(--border-color-light)`}
+  }
+   
     
 `
 

@@ -12,7 +12,6 @@ display: flex;
 export default function Week(){
     return(
         <WeekStyled>
-            <HourTicks/>
             {[...Array(7).keys()]
                 .map(key=><Day/>)}
         </WeekStyled>

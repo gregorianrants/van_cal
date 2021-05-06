@@ -1,4 +1,4 @@
-import Hours from "./Hours";
+/*import Hours from "./Hours";*/
 import settingsContext from './Contexts'
 import React from "react";
 import styled from "styled-components";
@@ -6,23 +6,12 @@ import styled from "styled-components";
 
 const HourTicksStyled = styled.div`
 display: flex;
-
 `
 
-const TicksStyled = styled(Hours)`
-  width: 15px;
-`;
-
 const TickValuesStyled = styled.div`
-  height:  ${props=> `${props.height}px`};
-  width: 15px;
- 
-  &:first-child{
-    border-top: ${props=>`${props.border}px solid transparent`};
-  }
-  border-bottom: ${props=>`${props.border}px solid transparent`};
-  
+  flex: 0 0 15px;
   p {
+    height:  ${props=> `${props.hourHeight}px`};
     color: grey;
     margin: 0;
     padding: 0;
@@ -31,32 +20,68 @@ const TickValuesStyled = styled.div`
   }
 `;
 
+
+/*height:  ${props=> `${props.height}px`};*/
+const TickLinesStyled = styled.div`
+  flex: 1 0 30px;
+  & .tick-line{
+    height:  ${props=> `${props.hourHeight}px`};
+    width: 100%;
+    border-top: 1px solid lightgray;
+
+    &:last-child{
+      border-bottom: 1px solid var(--border-color-light);
+    }
+  }
+`
+
+
 function TickValues(){
     const {borderWidth,hourHeight}=React.useContext(settingsContext)
 
     return(
-        <div>
+        <TickValuesStyled
+            hourHeight={hourHeight}
+            borderWidth={borderWidth}
+
+        >
             {[...Array(24).keys()]//TODO something weird happens when i set this to 25?
                 .map((index) =>
-                    <TickValuesStyled
+                    <div className='tick-value'
                         key={index}
-                        height={hourHeight}
-                        border={borderWidth}
-                    ><p>{index}</p></TickValuesStyled>
+
+                    ><p>{index}</p></div>
                 )}
-        </div>
+        </TickValuesStyled>
     )
 
+}
+
+
+function TickLines(){
+    const {borderWidth,hourHeight}=React.useContext(settingsContext)
+    return (<TickLinesStyled
+        hourHeight={hourHeight}
+        borderWidth={borderWidth}
+    >
+        {[...Array(24).keys()]//TODO something weird happens when i set this to 25?
+            .map((index) =>
+                <div className='tick-line'
+                    key={index}
+                    height={hourHeight}
+                    border={borderWidth}
+                />
+            )}
+    </TickLinesStyled>)
 }
 
 export default function HourTicks({headerHeight}){
     const {borderWidth,hourHeight}=React.useContext(settingsContext)
 
     return (
-
         <HourTicksStyled headerHeight={headerHeight}>
             <TickValues/>
-            <TicksStyled height={hourHeight} border={borderWidth}/>
+            <TickLines height={hourHeight} border={borderWidth}/>
         </HourTicksStyled>
     )
 }

@@ -35,7 +35,7 @@ function monthAndYear(date){
 //console.log(monthAndYear(new Date()))
 
 const exports = {
-    currentDateTime,weekContaining,dayOfWeek,monthAndYear
+    currentDateTime,weekContaining,dayOfWeek,monthAndYear,addDays
 }
 
 export default exports
