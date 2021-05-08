@@ -19,11 +19,11 @@ export function configure(height,border){
 
 
     function eventGeometry(event,colIndex,cols) {
-        const {startTimeDecimal, endTimeDecimal} = event
+        const {start, end} = event
         return {
             ...event,
-            top: String(position(startTimeDecimal)) + 'px',
-            bottom: String((height*24) - position(endTimeDecimal)) + 'px',
+            top: String(position(start)) + 'px',
+            bottom: String((height*24) - position(end)) + 'px',
             left: String(left(colIndex,cols)) + '%',
             right: String(100 - (left(colIndex,cols) + widthOfCol(cols))) + '%'
         }

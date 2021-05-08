@@ -3,12 +3,19 @@ import styled from "styled-components";
 import settingsContext from './Contexts'
 
 
+const HoursStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+`
+
 const HourStyled = styled.div` 
-    height:  ${props=> `${props.height}px`};
-    border-top: 1px solid lightgray;
+  flex: 1 0 0;
+  border-top: 1px solid lightgray;
   
   &:last-child{
-    border-bottom: ${props=>`${props.border}px solid var(--border-color-light)`}
+    border-bottom: ${props=>`${props.borderWidth}px solid var(--border-color-light)`}
   }
    
     
@@ -20,18 +27,18 @@ export default function Hours({className}) {
 
 
     return (
-        <div>
+        <HoursStyled>
             {[...Array(24).keys()]
                 .map((index) =>
                         <HourStyled
                             key={index}
                             data-hour={String(index)}
-                            height={hourHeight}
-                            border={borderWidth}
+                            hourHeight={hourHeight}
+                            borderWidth={borderWidth}
                             className={className}
                         />
                 )}
-        </div>
+        </HoursStyled>
 
     )
 }

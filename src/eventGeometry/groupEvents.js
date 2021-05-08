@@ -1,3 +1,5 @@
+import {asDecimal} from '../utilities/time'
+
 function idGenerator() {
     let id = 0
     return () => id++
@@ -7,8 +9,8 @@ let id = idGenerator()
 
 export function timePeriod(start, end) {
     return {
-        startTimeDecimal: start,
-        endTimeDecimal: end,
+        start: start,
+        end: end,
         id: id()}
 }
 
@@ -26,11 +28,11 @@ export function timePeriod(start, end) {
 /*let groups = events.map(event => [event])*/
 
 function getStart(set) {
-    return set.map(event => event.startTimeDecimal).reduce((a, b) => Math.min(a, b))
+    return set.map(event => event.start).reduce((a, b) => Math.min(a, b))
 }
 
 function getEnd(set) {
-    return set.map(event => event.endTimeDecimal).reduce((a, b) => Math.max(a, b))
+    return set.map(event => event.end).reduce((a, b) => Math.max(a, b))
 }
 
 function asPeriod(set) {
@@ -38,7 +40,7 @@ function asPeriod(set) {
 }
 
 function overlaps(period1, period2) {
-    return period1.startTimeDecimal < period2.endTimeDecimal && period2.startTimeDecimal < period1.endTimeDecimal
+    return period1.start < period2.end && period2.start < period1.end
 }
 
 function negate(f){
@@ -55,7 +57,7 @@ function sortAscending(arr) {
 */
 
 function sortAscending(arr) {
-    return [...arr].sort((a, b) => a.startTimeDecimal - b.startTimeDecimal)
+    return [...arr].sort((a, b) => a.start - b.start)
 }
 
 

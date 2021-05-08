@@ -10,13 +10,19 @@ display: flex;
 
 const TickValuesStyled = styled.div`
   flex: 0 0 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+  div{
+    flex: 1 0 0;
+  }
   p {
-    height:  ${props=> `${props.hourHeight}px`};
     color: grey;
     margin: 0;
     padding: 0;
     font-size: 12px;
-    transform: translateY(-6px);//TODO this is just a value i tried that seems to work NOW need to look a the math though so it works for all settings
+    transform: translateY(-7px);//TODO this is just a value i tried that seems to work NOW need to look a the math though so it works for all settings
   }
 `;
 
@@ -24,8 +30,11 @@ const TickValuesStyled = styled.div`
 /*height:  ${props=> `${props.height}px`};*/
 const TickLinesStyled = styled.div`
   flex: 1 0 30px;
+  
+  display: flex;
+  flex-direction: column;
   & .tick-line{
-    height:  ${props=> `${props.hourHeight}px`};
+    flex: 1 0 0;
     width: 100%;
     border-top: 1px solid lightgray;
 

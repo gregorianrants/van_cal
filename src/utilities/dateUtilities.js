@@ -20,8 +20,6 @@ function weekContaining(date) {
     return difference.map(diff => addDays(date, diff))
 }
 
-
-
 function dayOfWeek(date){
     return format(date,'iii')
 }
@@ -30,9 +28,6 @@ function monthAndYear(date){
     return `${format(date,'MMM')} ${format(date,'yyyy')}`
 }
 
-//console.log(dayOfWeek(new Date()))
-
-//console.log(monthAndYear(new Date()))
 
 const exports = {
     currentDateTime,weekContaining,dayOfWeek,monthAndYear,addDays
