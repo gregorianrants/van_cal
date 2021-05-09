@@ -21,13 +21,11 @@ export default function Events({events,updateEvent}) {
         }
     )
 
-    console.log(events)
 
     return (
         eventsGeometry(events)
             .map(
                 (evnt, i) => {
-                    console.log(evnt)
                     return <Event
                         {...evnt}
                         key={evnt.id}

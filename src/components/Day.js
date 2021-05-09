@@ -62,7 +62,7 @@ export default function Day({events}) {
         }))
     }
 */
-
+console.log(events)
 
     return (
         <DayStyled>

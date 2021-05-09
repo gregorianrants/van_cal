@@ -1,8 +1,9 @@
 import Day from './Day'
 import styled from "styled-components";
+import NewJobModal from './NewJobModal'
 
 import React from "react";
-import dateUtils from "dateUtilities";
+import dateUtils from "../utilities/dateUtilities";
 import {add} from 'date-fns'
 
 import DayLabels from './DayLabels'
@@ -23,52 +24,46 @@ const CalendarStyled = styled.div`
 `
 
 export default function Calendar(){
-    const [currentDay,setCurrentDay]=React.useState(dateUtils.currentDateTime)
+    const [firstDayOfWeek,setFirstDayOfWeek]=React.useState(dateUtils.previousMonday(new Date()))
 
     const [events,setEvents]=React.useState([])
     //TODO have a think about what you are using/nameing current day. what does that mean
 
     const {borderWidth,hourHeight}=React.useContext(settingsContext)
 
-
-    const week=React.useMemo(
-        ()=>{
-            return dateUtils.weekContaining(currentDay)
-        },
-        [currentDay]
-        )
-
     React.useEffect(()=>{
-       fetchWeekContaining({from: week[0],to:week[6]})
-           .then(data=> {
-               setEvents(data)
-           })
-           .catch(console.error)
-    },[week])
+        fetchWeekContaining(firstDayOfWeek)
+            .then(data=> {
+                setEvents(data)
+            })
+            .catch(console.error)
+    },[firstDayOfWeek])
+
+
 
     const incrementWeek =()=>{
-        setCurrentDay(day=>dateUtils.addDays(day,7))
+        setFirstDayOfWeek(day=>dateUtils.addDays(day,7))
     }
 
     const decrementWeek=()=>{
-        setCurrentDay(day=>dateUtils.addDays(day,-7))
+        setFirstDayOfWeek(day=>dateUtils.addDays(day,-7))
     }
 
 
     return(
-        <CalendarStyled hourHeight={hourHeight}>
-            <div></div>
-            <Header currentDay={currentDay}
-                    incrementWeek={incrementWeek}
-                    decrementWeek={decrementWeek}/>
-            <div></div>
-            <DayLabels week={week} />
-            <HourTicks/>
-            <Week events={events} week={week}/>
-        </CalendarStyled>
-
-
-
+        <React.Fragment>
+            <CalendarStyled hourHeight={hourHeight}>
+                <div></div>
+                <Header firstDayOfWeek={firstDayOfWeek}
+                        incrementWeek={incrementWeek}
+                        decrementWeek={decrementWeek}/>
+                <div></div>
+                <DayLabels firstDayOfWeek={firstDayOfWeek} />
+                <HourTicks/>
+                <Week events={events} firstDayOfWeek={firstDayOfWeek}/>
+            </CalendarStyled>
+           {/* <NewJobModal />*/}
+        </React.Fragment>
 
     )
 }

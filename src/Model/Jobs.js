@@ -1,7 +1,13 @@
+import du from '../utilities/dateUtilities'
+
+
 const port = 3000
 
-export default async function fetchWeekContaining({from,to}){
-    return fetch(`http://localhost:8000/api/v1/jobs?from=${from}&to=${to}`)
+export default async function fetchWeekContaining(weekStart){
+    const weekEnd = du.addDays(weekStart,7)
+
+
+    return fetch(`http://localhost:8000/api/v1/jobs?from=${weekStart}&to=${weekEnd}`)
         .then(res=>res.json())
         .then(res=>res.data)
         .then(data=>data.map(job=>(

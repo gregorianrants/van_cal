@@ -42,7 +42,7 @@ export function configure(height,border){
     return function eventsGeometry(events) {
 
 
-        console.log(groupEvents(events))
+
 
         let result =  groupEvents(events).map(
             overlappingGroup => overlappingGroup

@@ -1,4 +1,4 @@
-import {addDays,add,format} from "date-fns";
+const {addDays,add,format,nextMonday} = require("date-fns");
 
 function mondayIndexed(sundayIndexed) {
     return sundayIndexed === 0 ? 6 : sundayIndexed - 1
@@ -16,8 +16,11 @@ function currentDateTime() {
 function weekContaining(date) {
     const daysOfWeek = [0, 1, 2, 3, 4, 5, 6]
     const difference = daysOfWeek.map(day => day - weekIndex(date))
-
     return difference.map(diff => addDays(date, diff))
+}
+
+function weekBoundaries(date){
+    return {'monday': weekContaining(date)[0], 'sunday': weekContaining(date)[6]}
 }
 
 function dayOfWeek(date){
@@ -28,9 +31,14 @@ function monthAndYear(date){
     return `${format(date,'MMM')} ${format(date,'yyyy')}`
 }
 
-
-const exports = {
-    currentDateTime,weekContaining,dayOfWeek,monthAndYear,addDays
+function previousMonday(date){
+    return nextMonday(addDays(date,-7))
 }
 
-export default exports
+//console.log(dayOfWeek(new Date()))
+
+//console.log(monthAndYear(new Date()))
+
+module.exports = {
+    currentDateTime,weekContaining,dayOfWeek,monthAndYear,weekBoundaries,addDays,previousMonday
+}

@@ -1,5 +1,6 @@
-import dateUtils from "../utilities/dateUtilities";
+import du from "../utilities/dateUtilities";
 import styled from "styled-components";
+
 
 
 const DayLabelsStyled=styled.div`
@@ -27,14 +28,14 @@ const DayLabelsStyled=styled.div`
   }
 `
 
-export default function DayLabels({week}){
+export default function DayLabels({firstDayOfWeek}){
     return (
         <DayLabelsStyled>
-                {week
+                {du.weekContaining(firstDayOfWeek)
                     .map(date=>(
                         <div className='day'>
-                            <p>{dateUtils.dayOfWeek(date)}</p>
-                            <p>{date.getDate()}</p>
+                            <p>{du.dayOfWeek(date)}</p>
+                            <p>{firstDayOfWeek.getDate()}</p>
                         </div>
                     ))}
         </DayLabelsStyled>

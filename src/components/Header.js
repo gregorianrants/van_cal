@@ -7,7 +7,7 @@ display: flex
 
 `
 
-export default function Header({currentDay,
+export default function Header({firstDayOfWeek,
                                    incrementWeek,
                                decrementWeek}){
     return (
@@ -16,7 +16,7 @@ export default function Header({currentDay,
                 onClick={decrementWeek}
 
             >-</button>
-            <p>{dateUtilities.monthAndYear(currentDay)}</p>
+            <p>{dateUtilities.monthAndYear(firstDayOfWeek)}</p>
 
             <button
             onClick={incrementWeek}
