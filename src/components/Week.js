@@ -9,11 +9,13 @@ display: flex;
   
 `
 
-export default function Week(){
+export default function Week({events,week}){
     return(
+        //TODO: consider efficiency of filterning all events each time for each day, should i be using a map object instead
         <WeekStyled>
-            {[...Array(7).keys()]
-                .map(key=><Day/>)}
+            {week.map(date => (
+                <Day events={events.filter(event => event.start.getDay() === date.getDay())} />
+            ))}
         </WeekStyled>
     )
 }

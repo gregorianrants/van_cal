@@ -24,6 +24,8 @@ const CalendarStyled = styled.div`
 
 export default function Calendar(){
     const [currentDay,setCurrentDay]=React.useState(dateUtils.currentDateTime)
+
+    const [events,setEvents]=React.useState([])
     //TODO have a think about what you are using/nameing current day. what does that mean
 
     const {borderWidth,hourHeight}=React.useContext(settingsContext)
@@ -37,11 +39,12 @@ export default function Calendar(){
         )
 
     React.useEffect(()=>{
-       fetchWeekContaining()
-           .then(console.log)
+       fetchWeekContaining({from: week[0],to:week[6]})
+           .then(data=> {
+               setEvents(data)
+           })
            .catch(console.error)
-
-    },[])
+    },[week])
 
     const incrementWeek =()=>{
         setCurrentDay(day=>dateUtils.addDays(day,7))
@@ -57,11 +60,11 @@ export default function Calendar(){
             <div></div>
             <Header currentDay={currentDay}
                     incrementWeek={incrementWeek}
-            decrementWeek={decrementWeek}/>
+                    decrementWeek={decrementWeek}/>
             <div></div>
             <DayLabels week={week} />
             <HourTicks/>
-            <Week />
+            <Week events={events} week={week}/>
         </CalendarStyled>
 
 

@@ -1,4 +1,4 @@
-import {asDecimal} from '../utilities/time'
+
 
 function idGenerator() {
     let id = 0
@@ -28,11 +28,11 @@ export function timePeriod(start, end) {
 /*let groups = events.map(event => [event])*/
 
 function getStart(set) {
-    return set.map(event => event.start).reduce((a, b) => Math.min(a, b))
+    return set.map(event => event.start).reduce((a, b) => new Date(Math.min(a, b)))
 }
 
 function getEnd(set) {
-    return set.map(event => event.end).reduce((a, b) => Math.max(a, b))
+    return set.map(event => event.end).reduce((a, b) => new Date(Math.max(a, b)))
 }
 
 function asPeriod(set) {
@@ -62,8 +62,8 @@ function sortAscending(arr) {
 
 
 function difference(arrayA, arrayB) {
-    let ids = arrayA.map(event => event.id)
-    return arrayB.filter(event => !ids.includes(event.id))
+    let ids = arrayA.map(event => event._id)
+    return arrayB.filter(event => !ids.includes(event._id))
 }
 
 

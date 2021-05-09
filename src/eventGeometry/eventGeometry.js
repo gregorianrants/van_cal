@@ -1,4 +1,5 @@
 import groupEvents from './groupEvents'
+import asDecimal from '../utilities/time'
 
 export function configure(height,border){
     const position = (
@@ -7,7 +8,9 @@ export function configure(height,border){
         const minutes = (time) => time - hours(time)
 
         return (time) => {
-            return hours(time) * height + (hours(time) + 1) * border + height * minutes(time)
+            time = asDecimal(time)  //TODO modifying state here, please refactor.
+
+            return hours(time) * height + (hours(time) + 1) * border + height * minutes(time)//TODO need to make this more declaritive
         }
     })(height,border)
 
@@ -34,7 +37,13 @@ export function configure(height,border){
             : arr.slice();
     };
 
+
+
     return function eventsGeometry(events) {
+
+
+        console.log(groupEvents(events))
+
         let result =  groupEvents(events).map(
             overlappingGroup => overlappingGroup
                 .map((col, colIndex) => {

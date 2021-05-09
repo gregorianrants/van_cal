@@ -21,14 +21,19 @@ export default function Events({events,updateEvent}) {
         }
     )
 
+    console.log(events)
+
     return (
         eventsGeometry(events)
             .map(
-                (evnt, i) => <Event
-                    {...evnt}
-                    key={evnt.id}
-                    updateEvent={updateEventWithIdF(evnt.id)}
-                />
+                (evnt, i) => {
+                    console.log(evnt)
+                    return <Event
+                        {...evnt}
+                        key={evnt.id}
+                        updateEvent={updateEventWithIdF(evnt.id)}
+                    />
+                }
             )
 
     )
