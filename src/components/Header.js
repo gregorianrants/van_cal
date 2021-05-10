@@ -9,7 +9,8 @@ display: flex
 
 export default function Header({firstDayOfWeek,
                                    incrementWeek,
-                               decrementWeek}){
+                               decrementWeek,
+                               handleShowModal}){
     return (
         <HeaderStyled>
             <button
@@ -22,6 +23,8 @@ export default function Header({firstDayOfWeek,
             onClick={incrementWeek}
 
             >+</button>
+
+            <button onClick={handleShowModal}>new job</button>
         </HeaderStyled>
     )
 };

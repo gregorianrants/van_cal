@@ -13,7 +13,7 @@ import HourTicks from "./HourTicks";
 import Header from './Header'
 import settingsContext from "./Contexts";
 
-import fetchWeekContaining from "../Model/Jobs";
+import {fetchWeekContaining} from "../Model/Jobs";
 
 const CalendarStyled = styled.div`
   margin: 30px;
@@ -25,6 +25,7 @@ const CalendarStyled = styled.div`
 
 export default function Calendar(){
     const [firstDayOfWeek,setFirstDayOfWeek]=React.useState(dateUtils.previousMonday(new Date()))
+    const [showModal,setShowModal]=React.useState(false)
 
     const [events,setEvents]=React.useState([])
     //TODO have a think about what you are using/nameing current day. what does that mean
@@ -49,6 +50,10 @@ export default function Calendar(){
         setFirstDayOfWeek(day=>dateUtils.addDays(day,-7))
     }
 
+    const toggleModal=()=>{
+        setShowModal(val=>!val)
+    }
+
 
     return(
         <React.Fragment>
@@ -56,13 +61,15 @@ export default function Calendar(){
                 <div></div>
                 <Header firstDayOfWeek={firstDayOfWeek}
                         incrementWeek={incrementWeek}
-                        decrementWeek={decrementWeek}/>
+                        decrementWeek={decrementWeek}
+                        handleShowModal={toggleModal}
+                />
                 <div></div>
                 <DayLabels firstDayOfWeek={firstDayOfWeek} />
                 <HourTicks/>
                 <Week events={events} firstDayOfWeek={firstDayOfWeek}/>
             </CalendarStyled>
-           {/* <NewJobModal />*/}
+           {showModal && <NewJobModal />}
         </React.Fragment>
 
     )
