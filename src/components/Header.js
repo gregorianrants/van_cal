@@ -1,4 +1,4 @@
-import dateUtilities from "dateUtilities";
+import dateUtilities from "../utilities/dateUtilities";
 import styled from "styled-components";
 
 const HeaderStyled = styled.div`

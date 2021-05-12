@@ -1,6 +1,6 @@
 import Day from './Day'
 import styled from "styled-components";
-import NewJobModal from './NewJobModal'
+import NewJobModal from './forms/NewJobModal'
 
 import React from "react";
 import dateUtils from "../utilities/dateUtilities";
@@ -39,8 +39,6 @@ export default function Calendar(){
             })
             .catch(console.error)
     },[firstDayOfWeek])
-
-
 
     const incrementWeek =()=>{
         setFirstDayOfWeek(day=>dateUtils.addDays(day,7))

@@ -35,7 +35,7 @@ export default function DayLabels({firstDayOfWeek}){
                     .map(date=>(
                         <div className='day'>
                             <p>{du.dayOfWeek(date)}</p>
-                            <p>{firstDayOfWeek.getDate()}</p>
+                            <p>{date.getDate()}</p>
                         </div>
                     ))}
         </DayLabelsStyled>
