@@ -3,7 +3,7 @@ import styled from "styled-components";
 import NewJobModal from './forms/NewJobModal'
 
 import React from "react";
-import dateUtils from "../utilities/dateUtilities";
+import dateUtils from "../utilities/dateUtilities.js";
 import {add} from 'date-fns'
 
 import DayLabels from './DayLabels'
@@ -14,6 +14,8 @@ import Header from './Header'
 import settingsContext from "./Contexts";
 
 import {fetchWeekContaining} from "../Model/Jobs";
+
+import {addDays} from "date-fns";
 
 const CalendarStyled = styled.div`
   margin: 30px;
@@ -52,6 +54,11 @@ export default function Calendar(){
         setShowModal(val=>!val)
     }
 
+    const addToEvents = (event)=>{
+        if (dateUtils.fitsInWeek(firstDayOfWeek,event.start)){
+            setEvents(events=>[...events, event])
+        }
+    }
 
     return(
         <React.Fragment>
@@ -67,8 +74,7 @@ export default function Calendar(){
                 <HourTicks/>
                 <Week events={events} firstDayOfWeek={firstDayOfWeek}/>
             </CalendarStyled>
-           {showModal && <NewJobModal />}
+           {showModal && <NewJobModal addToEvents={addToEvents} toggleModal={toggleModal}/>}
         </React.Fragment>
-
     )
 }

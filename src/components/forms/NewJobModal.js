@@ -13,10 +13,10 @@ import Modal from './Modal'
 
 
 
-export default function NewJobForm() {
+export default function NewJobForm({addToEvents,toggleModal}) {
     return (
         <Modal>
-            <JobForm onSave={createJob}/>
+            <JobForm onSave={createJob} addToEvents={addToEvents} toggleModal={toggleModal}/>
         </Modal>
     )
 }

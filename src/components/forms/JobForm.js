@@ -39,7 +39,7 @@ function dateTimeFromInput(date, time) {
 
 
 
-export default function JobForm({onSave}){
+export default function JobForm({onSave,addToEvents,toggleModal}){
     const summary = useInput()
     const location = useInput()
     const date = useInput()
@@ -57,7 +57,13 @@ export default function JobForm({onSave}){
             end: dateTimeFromInput(date.value, end.value),
             description: description.value,
         }
-        onSave(data).then(console.log).catch(console.error)
+        onSave(data)
+            .then((calEvent)=>{
+                console.log(calEvent)
+                addToEvents(calEvent)
+                toggleModal()
+            })
+            .catch(console.error)
     }
 
 

@@ -1,4 +1,4 @@
-import du from "../utilities/dateUtilities";
+import du from "../utilities/dateUtilities.js";
 import styled from "styled-components";
 
 
