@@ -1,5 +1,5 @@
 import groupEvents from './groupEvents'
-import asDecimal from '../utilities/time'
+import {asDecimal} from '../utilities/timeConversions.js'
 
 export function configure(height,border){
     const position = (

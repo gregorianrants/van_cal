@@ -1,6 +1,4 @@
-export const getTime = (position, height) => {
-    return (position / height) * 24
-}
+
 
 export function getNumPixels(str) {
     return String(str).slice(0, str.length - 2) * 1

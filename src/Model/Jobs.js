@@ -1,7 +1,7 @@
 import du from '../utilities/dateUtilities.js'
 
 
-const port = 3000
+
 
 
 
@@ -40,9 +40,12 @@ export function createJob(job){
 }
 
 
-export function editJob({id,data}){
-    return fetch(`http://localhost:8000/api/v1/jobs/${id}`,{
-        method: 'POST',
+export function editJob({_id,data}){
+    console.log('editJob')
+    console.log(_id)
+
+    return fetch(`http://localhost:8000/api/v1/jobs/${_id}`,{
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },

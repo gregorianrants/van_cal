@@ -1,30 +1,30 @@
-import dateUtilities from "../utilities/dateUtilities.js";
-import styled from "styled-components";
+import {Toolbar,Typography,Button} from "@material-ui/core";
+import {ArrowBack,ArrowForward} from "@material-ui/icons";
 
-const HeaderStyled = styled.div`
-display: flex
+import {monthAndYear} from "../utilities/dateUtilities.js"
 
 
-`
+
+
+
 
 export default function Header({firstDayOfWeek,
                                    incrementWeek,
                                decrementWeek,
                                handleShowModal}){
     return (
-        <HeaderStyled>
-            <button
+        <Toolbar>
+            <Button
                 onClick={decrementWeek}
+            ><ArrowBack /></Button>
+            <Typography variant='h4'>{monthAndYear(firstDayOfWeek)}</Typography>
 
-            >-</button>
-            <p>{dateUtilities.monthAndYear(firstDayOfWeek)}</p>
-
-            <button
+            <Button
             onClick={incrementWeek}
 
-            >+</button>
+            ><ArrowForward /></Button>
 
-            <button onClick={handleShowModal}>new job</button>
-        </HeaderStyled>
+            <Button onClick={handleShowModal} variant='contained' color='primary'>new job</Button>
+        </Toolbar>
     )
 };

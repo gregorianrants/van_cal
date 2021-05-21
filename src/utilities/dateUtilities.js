@@ -1,10 +1,12 @@
-const {addDays,add,format,nextMonday,isSameDay} = require("date-fns");
+import {setHours, setMinutes} from "date-fns";
 
-function mondayIndexed(sundayIndexed) {
+const {addDays,format,nextMonday,isSameDay} = require("date-fns");
+
+export function mondayIndexed(sundayIndexed) {
     return sundayIndexed === 0 ? 6 : sundayIndexed - 1
 }
 
-function weekIndex(date) {
+export function weekIndex(date) {
     return mondayIndexed(date.getDay())
 }
 
@@ -14,28 +16,28 @@ function currentDateTime() {
 }
 */
 
-function weekContaining(date) {
+export function weekContaining(date) {
     const daysOfWeek = [0, 1, 2, 3, 4, 5, 6]
     const difference = daysOfWeek.map(day => day - weekIndex(date))
     return difference.map(diff => addDays(date, diff))
 }
 
-function dayOfWeek(date){
+export function dayOfWeek(date){
     return format(date,'iii')
 }
 
-function monthAndYear(date){
+export function monthAndYear(date){
     return `${format(date,'MMM')} ${format(date,'yyyy')}`
 }
 
-function previousMonday(date){
+export function previousMonday(date){
     const result =nextMonday(addDays(date,-7))
     result.setHours(0)
     result.setMinutes(0)
     return result
 }
 
-const fitsInWeek=(firstDayOfWeek,date)=>{
+export const fitsInWeek=(firstDayOfWeek,date)=>{
     const endOfWeek = addDays(firstDayOfWeek,7)
     if (isSameDay(firstDayOfWeek,date) || isSameDay(endOfWeek,date)){
         return true
@@ -43,11 +45,20 @@ const fitsInWeek=(firstDayOfWeek,date)=>{
     return (date >=firstDayOfWeek && date <=endOfWeek)
 }
 
-module.exports = {
+export const mergeDateAndTime = (date,time)=>{
+    const hours = time.getHours()
+    const minutes = time.getMinutes()
+    return setMinutes(setHours(date,hours),minutes)
+}
+
+const defaultExports = {
     weekContaining,
     dayOfWeek,
     monthAndYear,
     addDays,
     previousMonday,
-    fitsInWeek
+    fitsInWeek,
+    mergeDateAndTime
 }
+
+export default defaultExports

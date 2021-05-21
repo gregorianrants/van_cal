@@ -1,5 +1,6 @@
-import du from "../utilities/dateUtilities.js";
 import styled from "styled-components";
+import du from "../utilities/dateUtilities.js"
+
 
 
 
@@ -32,8 +33,8 @@ export default function DayLabels({firstDayOfWeek}){
     return (
         <DayLabelsStyled>
                 {du.weekContaining(firstDayOfWeek)
-                    .map(date=>(
-                        <div className='day'>
+                    .map((date,i)=>(
+                        <div className='day' key={i}>
                             <p>{du.dayOfWeek(date)}</p>
                             <p>{date.getDate()}</p>
                         </div>

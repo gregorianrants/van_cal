@@ -1,11 +1,8 @@
 import React from 'react'
-import {configure}
-    from '../eventGeometry/eventGeometry'
-import {timePeriod} from "../eventGeometry/groupEvents";
 import Events from './Events'
 import Hours from "./Hours";
 import styled from 'styled-components'
-import settingsContext from "./Contexts";
+
 
 const DayStyled = styled.div`
   position: relative;
@@ -23,10 +20,7 @@ const DayStyled = styled.div`
 
 
 
-export default function Day({events}) {
-    const {borderWidth,hourHeight}=React.useContext(settingsContext)
-
-
+export default function Day({events,updateDisplayEvent}) {
 /*
     const [events, setEvents] = React.useState([
         timePeriod(new Date(new Date().setHours(10)), new Date(new Date().setHours(14))),
@@ -62,12 +56,11 @@ export default function Day({events}) {
         }))
     }
 */
-console.log(events)
-
     return (
         <DayStyled>
                     <Events events={events}
                             /*updateEvent={updateEvent}*/
+                            updateDisplayEvent={updateDisplayEvent}
                     />
                     <Hours/>
         </DayStyled>

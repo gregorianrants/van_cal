@@ -1,9 +1,15 @@
 import React from "react";
-import styled from "styled-components";
-import {createJob} from "../../Model/Jobs";
 
-function useInput() {
-    const [value, setValue] = React.useState('')
+import {TextField, Grid, Button} from '@material-ui/core';
+import DateFnsUtils from '@date-io/date-fns'; // choose your lib
+import {
+    DatePicker,
+    TimePicker,
+    MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+
+function useInput(defaultValue='') {
+    const [value, setValue] = React.useState(defaultValue)
 
     const onChange = (e) => {
         setValue(e.target.value)
@@ -12,25 +18,10 @@ function useInput() {
     return {value, onChange}
 }
 
-const FormStyled = styled.form`
-  & .input-set {
-    margin: 0;
-    padding: 0.5em;
-    display: flex;
-
-    input {
-      margin-left: auto;
-    }
-    
-  }
-  .description {
-    flex-direction: column;
-  }
-`
 
 function dateTimeFromInput(date, time) {
-    console.log(time)
-    const [hours, minutes] = time.split(':')
+    const hours = time.getHours()
+    const minutes = time.getMinutes()
     let res = new Date(date)
     res.setHours(hours)
     res.setMinutes(minutes)
@@ -42,9 +33,9 @@ function dateTimeFromInput(date, time) {
 export default function JobForm({onSave,addToEvents,toggleModal}){
     const summary = useInput()
     const location = useInput()
-    const date = useInput()
-    const start = useInput()
-    const end = useInput()
+    const [dateValue,setDateValue] = React.useState(new Date())
+    const [startValue,setStartValue] = React.useState(new Date())
+    const [endValue,setEndValue] = React.useState(new Date())
     const description = useInput()
 
 
@@ -53,8 +44,8 @@ export default function JobForm({onSave,addToEvents,toggleModal}){
         const data = {
             summary: summary.value,
             location: location.value,
-            start: dateTimeFromInput(date.value, start.value),
-            end: dateTimeFromInput(date.value, end.value),
+            start: dateTimeFromInput(dateValue, startValue),
+            end: dateTimeFromInput(dateValue, endValue),
             description: description.value,
         }
         onSave(data)
@@ -70,40 +61,52 @@ export default function JobForm({onSave,addToEvents,toggleModal}){
     return (
         <>
             <h2>Create Job</h2>
-            <FormStyled action="">
-                <div className='input-set'>
-                    <label htmlFor="summary">summary</label>
-                    <input type="text" name='summary' {...summary}/>
-                </div>
+            <form action="">
+                <Grid container direction='column' spacing={1}>
+                    <Grid item>
+                        <TextField label='summary' {...summary} fullWidth/>
+                    </Grid>
+                    <Grid item>
+                        <TextField label='location' {...location} fullWidth/>
+                    </Grid>
+                    <Grid item>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <DatePicker
+                                value={dateValue}
+                                onChange={setDateValue}
+                                label='date'/>
+                        </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <TimePicker
+                                value={startValue}
+                                onChange={setStartValue}
+                                label='start'/>
+                        </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <TimePicker
+                                value={endValue}
+                                onChange={setEndValue}
+                                label='end'/>
+                        </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item>
+                        <TextField label='description' {...description} fullWidth/>
+                    </Grid>
+                    <Grid item>
+                        <Button onClick={handleSubmit} variant='contained' color='primary' fullWidth>save</Button>
+                    </Grid>
 
-                <div className='input-set'>
-                    <label htmlFor="location">location</label>
-                    <input type="text" name='summary' {...location}/>
-                </div>
+                </Grid>
 
 
-                <div className='input-set'>
-                    <label htmlFor="date">date</label>
-                    <input type="date" name='date' {...date}/>
-                </div>
 
 
-                <div className='input-set'>
-                    <label htmlFor="start">start time</label>
-                    <input type="time" name='start' {...start}/>
-                </div>
 
-                <div className='input-set'>
-                    <label htmlFor="end">end time</label>
-                    <input type="time" name='end' {...end}/>
-                </div>
-
-                <div className='input-set description'>
-                    <label htmlFor="description">description</label>
-                    <textarea type="text" name='description' {...description}/>
-                </div>
-                <button onClick={handleSubmit}>save</button>
-            </FormStyled>
+            </form>
         </>
         )
 }

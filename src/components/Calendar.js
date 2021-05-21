@@ -1,10 +1,8 @@
-import Day from './Day'
+
 import styled from "styled-components";
 import NewJobModal from './forms/NewJobModal'
+import {addDays} from "date-fns";
 
-import React from "react";
-import dateUtils from "../utilities/dateUtilities.js";
-import {add} from 'date-fns'
 
 import DayLabels from './DayLabels'
 import Week from './Week'
@@ -15,7 +13,11 @@ import settingsContext from "./Contexts";
 
 import {fetchWeekContaining} from "../Model/Jobs";
 
-import {addDays} from "date-fns";
+import React from "react";
+import  {previousMonday,fitsInWeek} from "../utilities/dateUtilities.js"
+
+
+
 
 const CalendarStyled = styled.div`
   margin: 30px;
@@ -26,13 +28,21 @@ const CalendarStyled = styled.div`
 `
 
 export default function Calendar(){
-    const [firstDayOfWeek,setFirstDayOfWeek]=React.useState(dateUtils.previousMonday(new Date()))
+    const [firstDayOfWeek,setFirstDayOfWeek]=React.useState(previousMonday(new Date()))
     const [showModal,setShowModal]=React.useState(false)
-
+    const [displayEvent,setDisplayEvent]=React.useState(null)
     const [events,setEvents]=React.useState([])
     //TODO have a think about what you are using/nameing current day. what does that mean
 
-    const {borderWidth,hourHeight}=React.useContext(settingsContext)
+    const {hourHeight}=React.useContext(settingsContext)
+
+    const updateDisplayEvent=(id)=>{
+        setDisplayEvent(events.filter(event=>event.id===id)[0])
+    }
+
+    if(displayEvent){
+        console.log(displayEvent)
+    }
 
     React.useEffect(()=>{
         fetchWeekContaining(firstDayOfWeek)
@@ -43,11 +53,11 @@ export default function Calendar(){
     },[firstDayOfWeek])
 
     const incrementWeek =()=>{
-        setFirstDayOfWeek(day=>dateUtils.addDays(day,7))
+        setFirstDayOfWeek(day=>addDays(day,7))
     }
 
     const decrementWeek=()=>{
-        setFirstDayOfWeek(day=>dateUtils.addDays(day,-7))
+        setFirstDayOfWeek(day=>addDays(day,-7))
     }
 
     const toggleModal=()=>{
@@ -55,7 +65,7 @@ export default function Calendar(){
     }
 
     const addToEvents = (event)=>{
-        if (dateUtils.fitsInWeek(firstDayOfWeek,event.start)){
+        if (fitsInWeek(firstDayOfWeek,event.start)){
             setEvents(events=>[...events, event])
         }
     }
@@ -72,7 +82,7 @@ export default function Calendar(){
                 <div></div>
                 <DayLabels firstDayOfWeek={firstDayOfWeek} />
                 <HourTicks/>
-                <Week events={events} firstDayOfWeek={firstDayOfWeek}/>
+                <Week events={events} firstDayOfWeek={firstDayOfWeek} updateDisplayEvent={updateDisplayEvent}/>
             </CalendarStyled>
            {showModal && <NewJobModal addToEvents={addToEvents} toggleModal={toggleModal}/>}
         </React.Fragment>

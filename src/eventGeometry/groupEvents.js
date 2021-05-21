@@ -2,7 +2,8 @@
 
 function idGenerator() {
     let id = 0
-    return () => id++
+    return () => id++  //TODO might want to look into whether this i cuasing a non unique id anywhere
+    //i think all event ids are coming from db now but worth a check at some point.
 }
 
 let id = idGenerator()

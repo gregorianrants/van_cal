@@ -1,4 +1,4 @@
-import styled from "styled-components";
+
 import React from "react";
 import {createJob} from "../../Model/Jobs";
 import JobForm from './JobForm'

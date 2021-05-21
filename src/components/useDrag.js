@@ -20,7 +20,6 @@ function reducer(state,action){
             ...state,
             listening: false
         }
-
     }
 }
 
@@ -36,12 +35,13 @@ export default function useDrag(mouseMoveF,mouseUpF){
     const handleMouseMove = React.useCallback((e) => {
         totalTranslationY.current += e.movementY
         mouseMoveF(e.movementY)
-    },[])
+    },[mouseMoveF])//added this dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
 
     const handleMouseUp = React.useCallback((e)=>{
+        console.log(document.elementFromPoint(e.clientX, e.clientY))
         dispatch({type: 'mouseUp'})
         mouseUpF(totalTranslationY.current)
-    },[])
+    },[mouseUpF])//added this dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
 
     React.useEffect(()=>{
         if(mouse.down) {
@@ -62,7 +62,7 @@ export default function useDrag(mouseMoveF,mouseUpF){
             }
         }
 
-    },[mouse])
+    },[mouse,handleMouseMove,handleMouseUp])//added handleMOuseMove handleMouseUp dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
 
     return ()=>{dispatch({type: 'down'})}
 }
