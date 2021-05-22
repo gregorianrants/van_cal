@@ -20,47 +20,13 @@ const DayStyled = styled.div`
 
 
 
-export default function Day({events,updateDisplayEvent}) {
-/*
-    const [events, setEvents] = React.useState([
-        timePeriod(new Date(new Date().setHours(10)), new Date(new Date().setHours(14))),
-
-    ])*/
-    /*const [events, setEvents] = React.useState([
-        timePeriod(10, 14),
-        timePeriod(10, 12),
-        timePeriod(12.25, 13.75),
-        timePeriod(15, 17.25),
-        timePeriod(15, 17),
-        timePeriod(18, 20)
-    ])*/
-   /*const [state,dispatch] = React.useReducer(reducer,{
-       mouseDown: false,
-       position: null,
-       top: null,
-       bottom: null,
-       left: null,
-       right: null
-   })*/
-
-
-
-
-   /* const updateEvent = (id, {start, end}) => {
-        setEvents(events => events.map(event => {
-            if (event.id === id) {
-                return timePeriod(start, end)
-            } else {
-                return {...event}
-            }
-        }))
-    }
-*/
+export default function Day({events,updateDisplayEvent,updateEvent}) {
     return (
         <DayStyled>
                     <Events events={events}
                             /*updateEvent={updateEvent}*/
                             updateDisplayEvent={updateDisplayEvent}
+                            updateEvent={updateEvent}
                     />
                     <Hours/>
         </DayStyled>

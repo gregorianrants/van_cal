@@ -10,7 +10,7 @@ display: flex;
   
 `
 
-export default function Week({events,firstDayOfWeek,updateDisplayEvent}){
+export default function Week({events,firstDayOfWeek,updateDisplayEvent,updateEvent}){
     return(
         //TODO: consider efficiency of filterning all events each time for each day, should i be using a map object instead
         <WeekStyled>
@@ -18,7 +18,9 @@ export default function Week({events,firstDayOfWeek,updateDisplayEvent}){
                 <Day
                     events={events.filter(event => event.start.getDay() === date.getDay())}
                     key={i}
-                    updateDisplayEvent={updateDisplayEvent}/>
+                    updateDisplayEvent={updateDisplayEvent}
+                    updateEvent={updateEvent}
+                />
             ))}
         </WeekStyled>
     )

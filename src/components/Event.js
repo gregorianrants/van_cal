@@ -30,6 +30,8 @@ export default function Event({
                                   start,
                                   end,
                                   backgroundColor = 'red',
+                                  updateEvent,
+                                  updateDisplayEvent
                               }) {
 
     const [top, setTop] = React.useState(initialTop)
@@ -50,13 +52,22 @@ export default function Event({
     }
 
     const onMouseUp = (totalTranslationY) => {
-        editJob({
-            _id, data:
-                {
-                    start: mergeDateAndTime(start, startTime(top)),
-                    end: mergeDateAndTime(end, endTime(bottom))
-                }
-        }).then(console.log).catch(console.error)
+        if(totalTranslationY>0){//TODO do i want to allow a little bit of movement then set back to original value if movement is small
+            editJob({
+                _id, data:
+                    {
+                        start: mergeDateAndTime(start, startTime(top)),
+                        end: mergeDateAndTime(end, endTime(bottom))
+                    }
+            })
+                .then(data=>{updateEvent(data._id,data)})
+                .catch(console.error)
+        }
+        else{
+            console.log('heloooooo')
+            updateDisplayEvent(_id)
+        }
+
     }
 
     const onMouseDown = useDrag(onMouseMove, onMouseUp)

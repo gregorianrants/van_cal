@@ -29,7 +29,7 @@ export default function Events({events,updateEvent,updateDisplayEvent}) {
                     return <Event
                         {...evnt}
                         key={i}
-                       /* updateEvent={updateEventWithIdF(evnt.id)} //should the id be _id*/
+                        updateEvent={updateEvent}
                         updateDisplayEvent={updateDisplayEvent}
                     />
                 }

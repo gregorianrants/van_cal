@@ -37,7 +37,7 @@ export default function Calendar(){
     const {hourHeight}=React.useContext(settingsContext)
 
     const updateDisplayEvent=(id)=>{
-        setDisplayEvent(events.filter(event=>event.id===id)[0])
+        setDisplayEvent(events.filter(event=>event._id===id)[0])
     }
 
     if(displayEvent){
@@ -60,7 +60,7 @@ export default function Calendar(){
         setFirstDayOfWeek(day=>addDays(day,-7))
     }
 
-    const toggleModal=()=>{
+    const toggleNewJobModal=()=>{
         setShowModal(val=>!val)
     }
 
@@ -70,6 +70,14 @@ export default function Calendar(){
         }
     }
 
+    const updateEvent=(id,data)=>{
+        setEvents((events)=>{
+            const remainder = events.filter(event=>event._id!==id)
+            return [...remainder,data]
+        })
+
+    }
+
     return(
         <React.Fragment>
             <CalendarStyled hourHeight={hourHeight}>
@@ -77,14 +85,18 @@ export default function Calendar(){
                 <Header firstDayOfWeek={firstDayOfWeek}
                         incrementWeek={incrementWeek}
                         decrementWeek={decrementWeek}
-                        handleShowModal={toggleModal}
+                        handleShowModal={toggleNewJobModal}
                 />
                 <div></div>
                 <DayLabels firstDayOfWeek={firstDayOfWeek} />
                 <HourTicks/>
-                <Week events={events} firstDayOfWeek={firstDayOfWeek} updateDisplayEvent={updateDisplayEvent}/>
+                <Week events={events}
+                      firstDayOfWeek={firstDayOfWeek}
+                      updateDisplayEvent={updateDisplayEvent}
+                      updateEvent={updateEvent}
+                />
             </CalendarStyled>
-           {showModal && <NewJobModal addToEvents={addToEvents} toggleModal={toggleModal}/>}
+           {showModal && <NewJobModal addToEvents={addToEvents} toggleModal={toggleNewJobModal}/>}
         </React.Fragment>
     )
 }

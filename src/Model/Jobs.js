@@ -1,10 +1,5 @@
 import du from '../utilities/dateUtilities.js'
 
-
-
-
-
-
 export async function fetchWeekContaining(weekStart){
     const weekEnd = du.addDays(weekStart,7)
     return fetch(`http://localhost:8000/api/v1/jobs?from=${weekStart}&to=${weekEnd}`)
@@ -51,6 +46,14 @@ export function editJob({_id,data}){
         },
         body: JSON.stringify(data)
     }).then(res=>res.json())
+        .then(res=>res.data)
+        .then(data=>(
+            {
+                ...data,
+                start: new Date(data.start),
+                end: new Date(data.end),//TODO create a function that does this
+            }
+        ))
         .catch(err=>console.error(err))
 }
 
