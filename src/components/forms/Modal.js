@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import {Card,CardContent} from "@material-ui/core";
 
 const BackGround = styled.div`
   position: fixed;
@@ -21,9 +22,7 @@ const ModalStyled = styled.div`
 export default function Modal({children}){
     return (
         <BackGround>
-            <ModalStyled>
-                {children}
-            </ModalStyled>
+                    {children}
         </BackGround>
     )
 }

@@ -8,6 +8,8 @@ import {
     MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 
+import {Typography} from "@material-ui/core";
+
 function useInput(defaultValue='') {
     const [value, setValue] = React.useState(defaultValue)
 
@@ -60,7 +62,7 @@ export default function JobForm({onSave,addToEvents,toggleModal}){
 
     return (
         <>
-            <h2>Create Job</h2>
+            <Typography variant='h4'>Create Job</Typography>
             <form action="">
                 <Grid container direction='column' spacing={1}>
                     <Grid item>

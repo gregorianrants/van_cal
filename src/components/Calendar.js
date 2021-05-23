@@ -16,6 +16,14 @@ import {fetchWeekContaining} from "../Model/Jobs";
 import React from "react";
 import  {previousMonday,fitsInWeek} from "../utilities/dateUtilities.js"
 
+import JobDetailsModal from "./forms/JobDetailsModal";
+
+import socketIOClient from "socket.io-client";
+
+
+
+
+
 
 
 
@@ -29,9 +37,10 @@ const CalendarStyled = styled.div`
 
 export default function Calendar(){
     const [firstDayOfWeek,setFirstDayOfWeek]=React.useState(previousMonday(new Date()))
-    const [showModal,setShowModal]=React.useState(false)
+    const [showNewJobModal,setShowNewJobModal]=React.useState(false)
     const [displayEvent,setDisplayEvent]=React.useState(null)
     const [events,setEvents]=React.useState([])
+    const [newDataCount,setNewDataCount] = React.useState(0)
     //TODO have a think about what you are using/nameing current day. what does that mean
 
     const {hourHeight}=React.useContext(settingsContext)
@@ -50,7 +59,17 @@ export default function Calendar(){
                 setEvents(data)
             })
             .catch(console.error)
-    },[firstDayOfWeek])
+    },[firstDayOfWeek,newDataCount])
+
+    React.useEffect(()=>{
+        const socket = socketIOClient('http://localhost:8000');
+        console.log(socket)
+
+        socket.on('message',(msg)=>{
+            setNewDataCount(count=>count+1)
+            console.log(msg)
+        })
+    },[])
 
     const incrementWeek =()=>{
         setFirstDayOfWeek(day=>addDays(day,7))
@@ -61,7 +80,7 @@ export default function Calendar(){
     }
 
     const toggleNewJobModal=()=>{
-        setShowModal(val=>!val)
+        setShowNewJobModal(val=>!val)
     }
 
     const addToEvents = (event)=>{
@@ -96,7 +115,8 @@ export default function Calendar(){
                       updateEvent={updateEvent}
                 />
             </CalendarStyled>
-           {showModal && <NewJobModal addToEvents={addToEvents} toggleModal={toggleNewJobModal}/>}
+           {showNewJobModal && <NewJobModal addToEvents={addToEvents} toggleModal={toggleNewJobModal}/>}
+            {displayEvent && <JobDetailsModal displayEvent={displayEvent}/>}
         </React.Fragment>
     )
 }

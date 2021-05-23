@@ -3,6 +3,7 @@ import React from "react";
 import {createJob} from "../../Model/Jobs";
 import JobForm from './JobForm'
 import Modal from './Modal'
+import {Card, CardContent} from "@material-ui/core";
 
 
 
@@ -16,7 +17,13 @@ import Modal from './Modal'
 export default function NewJobForm({addToEvents,toggleModal}) {
     return (
         <Modal>
-            <JobForm onSave={createJob} addToEvents={addToEvents} toggleModal={toggleModal}/>
+            <Card style={{width: 300}}>
+                <CardContent>
+                    <JobForm onSave={createJob}
+                             addToEvents={addToEvents}
+                             toggleModal={toggleModal}/>
+                </CardContent>
+            </Card>
         </Modal>
     )
 }

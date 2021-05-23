@@ -52,7 +52,8 @@ export default function Event({
     }
 
     const onMouseUp = (totalTranslationY) => {
-        if(totalTranslationY>0){//TODO do i want to allow a little bit of movement then set back to original value if movement is small
+        console.log(totalTranslationY)
+        if(totalTranslationY!=0){//TODO do i want to allow a little bit of movement then set back to original value if movement is small
             editJob({
                 _id, data:
                     {
@@ -67,7 +68,6 @@ export default function Event({
             console.log('heloooooo')
             updateDisplayEvent(_id)
         }
-
     }
 
     const onMouseDown = useDrag(onMouseMove, onMouseUp)
