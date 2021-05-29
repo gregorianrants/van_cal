@@ -29,10 +29,10 @@ const DayLabelsStyled=styled.div`
   }
 `
 
-export default function DayLabels({firstDayOfWeek}){
+export default function DayLabels({days}){
     return (
         <DayLabelsStyled>
-                {du.weekContaining(firstDayOfWeek)
+                {days
                     .map((date,i)=>(
                         <div className='day' key={i}>
                             <p>{du.dayOfWeek(date)}</p>

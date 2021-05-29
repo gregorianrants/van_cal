@@ -1,6 +1,6 @@
 
 import './App.css';
-import Calendar from './components/Calendar'
+import Calendar from './components/Calendar/Calendar'
 import SettingsContext from "./components/Contexts";
 
 const settingsValue =

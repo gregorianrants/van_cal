@@ -8,7 +8,7 @@ import {monthAndYear} from "../utilities/dateUtilities.js"
 
 
 
-export default function Header({firstDayOfWeek,
+export default function Header({currentDate,
                                    incrementWeek,
                                decrementWeek,
                                handleShowModal}){
@@ -17,7 +17,7 @@ export default function Header({firstDayOfWeek,
             <Button
                 onClick={decrementWeek}
             ><ArrowBack /></Button>
-            <Typography variant='h4'>{monthAndYear(firstDayOfWeek)}</Typography>
+            <Typography variant='h4'>{monthAndYear(currentDate)}</Typography>
 
             <Button
             onClick={incrementWeek}
