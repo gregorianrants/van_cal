@@ -1,5 +1,5 @@
 import React from "react";
-
+import {getNumPixels} from "../utilities/utilities";
 
 function reducer(state,action){
     if(action.type==='down'){
@@ -31,10 +31,12 @@ export default function useDrag(mouseMoveF,mouseUpF){
     })
 
     const totalTranslationY = React.useRef(0)
+    const initialTop = React.useRef(0)
+    const height = React.useRef(0)
 
     const handleMouseMove = React.useCallback((e) => {
         totalTranslationY.current += e.movementY
-        mouseMoveF(e.movementY)
+        mouseMoveF(e.movementY,totalTranslationY.current,initialTop.current,height.current)
     },[mouseMoveF])//added this dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
 
     const handleMouseUp = React.useCallback((e)=>{
@@ -58,11 +60,15 @@ export default function useDrag(mouseMoveF,mouseUpF){
             if(mouse.listening){
                 window.removeEventListener('mousemove',handleMouseMove)
                 window.removeEventListener('mouseup',handleMouseUp)
-                console.log('cleaning up')
             }
         }
-
     },[mouse,handleMouseMove,handleMouseUp])//added handleMOuseMove handleMouseUp dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
 
-    return ()=>{dispatch({type: 'down'})}
+    return (top,initialHeight)=>{
+        dispatch({type: 'down'})
+        totalTranslationY.current = 0
+        initialTop.current = top
+        height.current = initialHeight
+        console.log('height' , height.current)
+    }
 }

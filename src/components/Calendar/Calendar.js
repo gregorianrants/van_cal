@@ -20,7 +20,7 @@ import JobDetailsModal from "../forms/JobDetailsModal";
 
 import socketIOClient from "socket.io-client";
 
-import {reducer,getWeek,getDay} from "./reducer";
+import {useDay,useWeek} from "./reducer";
 
 const CalendarStyled = styled.div`
   margin: 30px;
@@ -31,9 +31,7 @@ const CalendarStyled = styled.div`
 
 export default function Calendar(){
    const [firstDayOfWeek,setFirstDayOfWeek]=React.useState(previousMonday(new Date()))
-    const [daysOnCal,dispatch] = React.useReducer(reducer,
-        new Date(),
-        getDay)
+    const [daysOnCal,dispatch] = useWeek()
 
     console.log(daysOnCal)
 
@@ -56,7 +54,7 @@ export default function Calendar(){
         fetchDays(daysOnCal.firstDay,daysOnCal.lastDay)
             .then(data=> {
                 console.log(data)
-                setEvents(data)
+                setEvents([...data])
             })
             .catch(console.error)
     },[daysOnCal])
@@ -103,6 +101,7 @@ export default function Calendar(){
 
     return(
         <React.Fragment>
+
             <CalendarStyled hourHeight={hourHeight}>
                 <div></div>
                 <Header currentDate={daysOnCal.currentDate}

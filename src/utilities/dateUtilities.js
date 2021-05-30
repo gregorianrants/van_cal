@@ -51,6 +51,14 @@ export const mergeDateAndTime = (date,time)=>{
     return setMinutes(setHours(date,hours),minutes)
 }
 
+export function setTimeDayStart(date){
+    return setMinutes(setHours(date,0),0)
+}
+
+export function setTimeDayEnd(date){
+    return setTimeDayStart(addDays(date,1))
+}
+
 const defaultExports = {
     weekContaining,
     dayOfWeek,
@@ -58,7 +66,9 @@ const defaultExports = {
     addDays,
     previousMonday,
     fitsInWeek,
-    mergeDateAndTime
+    mergeDateAndTime,
+    startOfDay: setTimeDayStart,
+    endOfDay: setTimeDayEnd
 }
 
 export default defaultExports

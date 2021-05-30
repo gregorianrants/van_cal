@@ -4,7 +4,7 @@ import useDrag from "./useDrag";
 import styled from 'styled-components'
 import {editJob} from "../Model/Jobs";
 
-import {getNumPixels} from "../utilities/utilities";
+import {getNumPixels,fromTop} from "../utilities/utilities";
 import settingsContext from "./Contexts";
 import {setHours, setMinutes} from "date-fns";
 import {getTimeFromPosition} from '../utilities/timeConversions.js'
@@ -37,6 +37,8 @@ export default function Event({
     const [top, setTop] = React.useState(initialTop)
     const [bottom, setBottom] = React.useState(initialBottom)
     const {hourHeight} = React.useContext(settingsContext)
+    const eventHeight = fromTop(getNumPixels(initialBottom),24*hourHeight)-getNumPixels(initialTop)
+
 
     function startTime(top) {
         return getTimeFromPosition(getNumPixels(top), hourHeight * 24)
@@ -46,9 +48,19 @@ export default function Event({
         return getTimeFromPosition(hourHeight * 24 - getNumPixels(bottom), hourHeight * 24)
     }
 
-    const onMouseMove = (movementY) => {
-        setTop(top => addToPixels(top, movementY))
-        setBottom(bottom => addToPixels(bottom, -movementY))
+    const onMouseMove = (movementY,translationY,initialTop,height) => {
+        const position = getNumPixels(initialTop)+translationY
+        const remainder = position%hourHeight
+        const upper = position-remainder
+        const lower = upper+hourHeight
+        if(Math.abs(position-upper)<Math.abs(position-lower)){
+            setTop(upper+'px')
+            setBottom(((hourHeight*24) -(upper+height))+'px')
+        }
+        else{
+            setTop(lower+'px')
+            setBottom(hourHeight*24 - (lower+height)+'px')
+        }
     }
 
     const onMouseUp = (totalTranslationY) => {
@@ -72,11 +84,12 @@ export default function Event({
 
     const onMouseDown = useDrag(onMouseMove, onMouseUp)
 
+
     return (
         <StyledEvent data-component={'event'}
                      data-id={_id}
                      className='event'
-                     onMouseDown={onMouseDown}
+                     onMouseDown={()=>{onMouseDown(top,eventHeight)}}
 
 
                      backgroundColor={backgroundColor}
