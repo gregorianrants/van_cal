@@ -25,8 +25,8 @@ export function configure(height,border){
         const {start, end} = event
         return {
             ...event,
-            top: String(position(start)) + 'px',
-            bottom: String((height*24) - position(end)) + 'px',
+            top: position(start),
+            bottom: (height*24) - position(end),
             left: String(left(colIndex,cols)) + '%',
             right: String(100 - (left(colIndex,cols) + widthOfCol(cols))) + '%'
         }

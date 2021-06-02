@@ -30,10 +30,9 @@ const CalendarStyled = styled.div`
 `
 
 export default function Calendar(){
-   const [firstDayOfWeek,setFirstDayOfWeek]=React.useState(previousMonday(new Date()))
     const [daysOnCal,dispatch] = useWeek()
 
-    console.log(daysOnCal)
+
 
     const [showNewJobModal,setShowNewJobModal]=React.useState(false)
     const [displayEvent,setDisplayEvent]=React.useState(null)
@@ -53,8 +52,7 @@ export default function Calendar(){
     React.useEffect(()=>{
         fetchDays(daysOnCal.firstDay,daysOnCal.lastDay)
             .then(data=> {
-                console.log(data)
-                setEvents([...data])
+                setEvents([...data])//TODO have a look at what we are doing here what if there is no data
             })
             .catch(console.error)
     },[daysOnCal])
@@ -86,7 +84,8 @@ export default function Calendar(){
     }
 
     const addToEvents = (event)=>{
-        if (fitsInWeek(firstDayOfWeek,event.start)){
+        console.log(event)
+        if (fitsInWeek(daysOnCal.firstDay,event.start)){
             setEvents(events=>[...events, event])
         }
     }

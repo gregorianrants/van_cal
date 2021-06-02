@@ -28,7 +28,7 @@ export default function Events({events,updateEvent,updateDisplayEvent}) {
                 (evnt, i) => {
                     return <Event
                         {...evnt}
-                        key={i}
+                        key={evnt._id}
                         updateEvent={updateEvent}
                         updateDisplayEvent={updateDisplayEvent}
                     />

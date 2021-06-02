@@ -41,7 +41,7 @@ function asPeriod(set) {
 }
 
 function overlaps(period1, period2) {
-    return period1.start < period2.end && period2.start < period1.end
+    return period1.start <= period2.end && period2.start <= period1.end
 }
 
 function negate(f){

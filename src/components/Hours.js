@@ -36,6 +36,7 @@ export default function Hours({className}) {
                             hourHeight={hourHeight}
                             borderWidth={borderWidth}
                             className={className}
+                            draggable='false'
                         />
                 )}
         </HoursStyled>
