@@ -108,7 +108,7 @@ export default function useDrag(onDragStart,mouseMoveF,mouseUpF){
 
     const handleMouseMove = React.useCallback((e) => {
         totalTranslationY.current += e.movementY
-        mouseMoveF(totalTranslationY.current)
+        mouseMoveF(totalTranslationY.current,e.movementY)
     },[mouseMoveF])//added this dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
 
     const handleMouseUp = React.useCallback((e)=>{
