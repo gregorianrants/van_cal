@@ -13,3 +13,7 @@ export function fromTop(fromBottom,containerHeight){
 export function fromBottom(fromTop,containerHeight){
     return containerHeight-fromTop
 }
+
+export const roundToNearest=(inputValue,nearest)=>{
+    return Math.round(inputValue/nearest)*nearest
+}
