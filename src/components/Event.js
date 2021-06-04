@@ -13,6 +13,7 @@ import useDetectBottomEdge from "./useDetectBottomEdge";
 
 
 
+
 const StyledEvent = styled.div`
   position: absolute;
   background-color: ${props => props.backgroundColor};
@@ -37,12 +38,7 @@ export default function Event({
     const [top, setTop] = React.useState(topProp)
     const [bottom, setBottom] = React.useState(bottomProp)
     const {hourHeight} = React.useContext(settingsContext)
-    const eventHeight = React.useRef(fromTop(bottomProp,24*hourHeight)-topProp)
 
-
-    const initialTop = React.useRef(0)
-    const initialBottom = React.useRef(0)
-    const dragEdge = React.useRef(false)
 
     const {overEdge,handleMouseMove,handleMouseLeave} = useDetectBottomEdge()
 
@@ -54,6 +50,11 @@ export default function Event({
     function endTime(bottom) {
         return getTimeFromPosition(hourHeight * 24 - bottom, hourHeight * 24)
     }
+
+    const eventHeight = React.useRef(fromTop(bottomProp,24*hourHeight)-topProp)
+    const initialTop = React.useRef(0)
+    const initialBottom = React.useRef(0)
+    const dragEdge = React.useRef(false)
 
     const onDragStart=()=>{
         initialTop.current = top
@@ -67,7 +68,7 @@ export default function Event({
 
     const onDrag = (translationY,movementY) => {
         if(dragEdge.current){
-           /* setBottom(bottom=>bottom-movementY)*/
+            setBottom(bottom=>bottom-movementY)
             const trackedBottom = initialBottom.current-translationY
             const snappedBottom = roundToNearest(trackedBottom,hourHeight)
             if(fromTop(snappedBottom,hourHeight*24)>top) setBottom(snappedBottom)
@@ -102,8 +103,6 @@ export default function Event({
     const drag = useDrag(onDragStart,onDrag, onDragEnd)
 
 
-
-
     return (
         <StyledEvent data-component={'event'}
                      data-id={_id}
@@ -117,12 +116,15 @@ export default function Event({
 
                      backgroundColor={backgroundColor}
                      style={{
-                         /*backgroundColor: backgroundColor,*/
-                         /* zIndex: zIndex,*/
+                         backgroundColor: backgroundColor,
                          top: top+'px', bottom: bottom+'px', left, right
                      }}
         >
         </StyledEvent>
     )
 }
+
+
+
+
 
