@@ -101,36 +101,47 @@ function reducer(state,action){
 }
 
 
-export default function useDrag(onDragStart,mouseMoveF,mouseUpF){
-    const [dragable,setDragable]=React.useState(false)
-
+export default function useDrag(onDragStart,dragElementF,dragBottomEdgeF,mouseUpF,overEdge){
+    const [drag,setDrag]=React.useState(false)
     const totalTranslationY = React.useRef(0)
 
-    const handleMouseMove = React.useCallback((e) => {
+
+    const handleDragElement = React.useCallback((e) => {
         totalTranslationY.current += e.movementY
-        mouseMoveF(totalTranslationY.current,e.movementY)
-    },[mouseMoveF])//added this dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
+        dragElementF(totalTranslationY.current,e.movementY)
+    },[dragElementF])//added this dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
+
+    const handleDragBottomEdge = React.useCallback((e) => {
+        totalTranslationY.current += e.movementY
+        dragBottomEdgeF(totalTranslationY.current,e.movementY)
+    },[dragBottomEdgeF])
 
     const handleMouseUp = React.useCallback((e)=>{
-       setDragable(false)
+       setDrag(false)
         mouseUpF(totalTranslationY.current)
     },[mouseUpF])//added this dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
 
     React.useEffect(()=>{
-        if(dragable) {
-            window.addEventListener('mousemove', handleMouseMove)
+        if(drag==='body') {
+            window.addEventListener('mousemove', handleDragElement)
+            window.addEventListener('mouseup',handleMouseUp)
+        }
+
+        if(drag==='edge') {
+            window.addEventListener('mousemove', handleDragBottomEdge)
             window.addEventListener('mouseup',handleMouseUp)
         }
 
         return ()=>{
-                window.removeEventListener('mousemove',handleMouseMove)
+                window.removeEventListener('mousemove',handleDragElement)
+                window.removeEventListener('mousemove',handleDragBottomEdge)
                 window.removeEventListener('mouseup',handleMouseUp)
         }
-    },[dragable,handleMouseMove,handleMouseUp])//added handleMOuseMove handleMouseUp dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
+    },[drag,handleDragElement,handleDragBottomEdge,handleMouseUp])//added handleMOuseMove handleMouseUp dependancy as suggested by error message, havent givn it much thought might be wort a look if get a bug
 
     return (e)=>{
         e.preventDefault()
-        setDragable(true)
+        setDrag(overEdge ? 'edge' : 'body')
         onDragStart()
         totalTranslationY.current = 0
     }

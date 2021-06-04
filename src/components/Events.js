@@ -26,6 +26,7 @@ export default function Events({events,updateEvent,updateDisplayEvent}) {
         eventsGeometry(events)
             .map(
                 (evnt, i) => {
+                    console.log(evnt)
                     return <Event
                         {...evnt}
                         key={evnt._id}

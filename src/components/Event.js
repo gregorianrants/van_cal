@@ -39,9 +39,7 @@ export default function Event({
     const [bottom, setBottom] = React.useState(bottomProp)
     const {hourHeight} = React.useContext(settingsContext)
 
-
     const {overEdge,handleMouseMove,handleMouseLeave} = useDetectBottomEdge()
-
 
     function startTime(top) {
         return getTimeFromPosition(top, hourHeight * 24)
@@ -51,34 +49,28 @@ export default function Event({
         return getTimeFromPosition(hourHeight * 24 - bottom, hourHeight * 24)
     }
 
-    const eventHeight = React.useRef(fromTop(bottomProp,24*hourHeight)-topProp)
+    const eventHeight = React.useRef(0)
     const initialTop = React.useRef(0)
     const initialBottom = React.useRef(0)
-    const dragEdge = React.useRef(false)
 
-    const onDragStart=()=>{
+    const onDragStart=React.useCallback(()=>{
         initialTop.current = top
         initialBottom.current = bottom
-        if(overEdge){
-            dragEdge.current =true
-        }else{
-            dragEdge.current = false
-        }
-    }
+        eventHeight.current =fromTop(bottom,24*hourHeight)-top
+    },[top,bottom])
 
-    const onDrag = (translationY,movementY) => {
-        if(dragEdge.current){
-            setBottom(bottom=>bottom-movementY)
+    const onDragBottomEdge = (translationY,movementY) => {
             const trackedBottom = initialBottom.current-translationY
             const snappedBottom = roundToNearest(trackedBottom,hourHeight)
             if(fromTop(snappedBottom,hourHeight*24)>top) setBottom(snappedBottom)
-        }else{
-            const tracked = initialTop.current+translationY
-            const snappedTop = roundToNearest(tracked,hourHeight)
-            setTop(snappedTop)
-            const bottom = fromBottom(snappedTop+eventHeight.current,hourHeight*24)
-            setBottom(bottom)
-        }
+    }
+
+    const onDragElement = (translationY) =>{
+        const tracked = initialTop.current+translationY
+        const snappedTop = roundToNearest(tracked,hourHeight)
+        setTop(snappedTop)
+        const bottom = fromBottom(snappedTop+eventHeight.current,hourHeight*24)
+        setBottom(bottom)
     }
 
     const onDragEnd = (totalTranslationY) => {
@@ -100,7 +92,7 @@ export default function Event({
         }
     }
 
-    const drag = useDrag(onDragStart,onDrag, onDragEnd)
+    const drag = useDrag(onDragStart,onDragElement,onDragBottomEdge,onDragEnd,overEdge)
 
 
     return (
