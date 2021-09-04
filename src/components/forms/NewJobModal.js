@@ -7,19 +7,22 @@ import {Card, CardContent} from "@material-ui/core";
 
 
 
+export default function NewJobModal({addToEvents,toggleModal,data}) {
+   const handleSubmit = (data) => {
+        createJob(data)
+            .then((calEvent)=>{
+                console.log(calEvent)
+                addToEvents(calEvent)
+                toggleModal()
+            })
+            .catch(console.error)
+    }
 
-
-
-
-
-
-
-export default function NewJobForm({addToEvents,toggleModal}) {
     return (
         <Modal>
             <Card style={{width: 300}}>
                 <CardContent>
-                    <JobForm onSave={createJob}
+                    <JobForm handleSubmit={handleSubmit}
                              addToEvents={addToEvents}
                              toggleModal={toggleModal}/>
                 </CardContent>

@@ -1,7 +1,6 @@
-
 import styled from "styled-components";
 import NewJobModal from '../forms/NewJobModal'
-import {addDays} from "date-fns";
+
 
 
 import DayLabels from '../DayLabels'
@@ -14,13 +13,14 @@ import settingsContext from "../Contexts";
 import {fetchDays} from "../../Model/Jobs";
 
 import React from "react";
-import  {previousMonday,fitsInWeek} from "../../utilities/dateUtilities.js"
+import  {fitsInWeek} from "../../utilities/dateUtilities.js"
 
-import JobDetailsModal from "../forms/JobDetailsModal";
+import JobModal from "../forms/JobModal";
 
-import socketIOClient from "socket.io-client";
+//import socketIOClient from "socket.io-client";
 
-import {useDay,useWeek} from "./reducer";
+import {useWeek} from "./reducer";
+import {useGapi} from "../../useGapi/useGapi";
 
 const CalendarStyled = styled.div`
   margin: 30px;
@@ -31,13 +31,12 @@ const CalendarStyled = styled.div`
 
 export default function Calendar(){
     const [daysOnCal,dispatch] = useWeek()
-
-
-
     const [showNewJobModal,setShowNewJobModal]=React.useState(false)
     const [displayEvent,setDisplayEvent]=React.useState(null)
     const [events,setEvents]=React.useState([])
     //TODO have a think about what you are using/nameing current day. what does that mean
+
+    const {authed,listEvents,signOut} = useGapi()
 
     const {hourHeight}=React.useContext(settingsContext)
 
@@ -56,6 +55,15 @@ export default function Calendar(){
             })
             .catch(console.error)
     },[daysOnCal])
+
+    React.useEffect(()=>{
+        if(authed){
+            listEvents(daysOnCal.firstDay,daysOnCal.lastDay)
+                .then(console.log('its a promise'))
+        }
+
+        },
+        [authed,daysOnCal])
 
   /*  React.useEffect(()=>{
         const socket = socketIOClient('http://localhost:8000');
@@ -83,24 +91,28 @@ export default function Calendar(){
         setShowNewJobModal(val=>!val)
     }
 
+    const closeDetailsModal=()=>{
+        setDisplayEvent(null)
+    }
+
     const addToEvents = (event)=>{
-        console.log(event)
         if (fitsInWeek(daysOnCal.firstDay,event.start)){
             setEvents(events=>[...events, event])
         }
     }
 
     const updateEvent=(id,data)=>{
+        console.log(data)
         setEvents((events)=>{
+            console.log(events.length)
             const remainder = events.filter(event=>event._id!==id)
+            console.log(remainder.length)
             return [...remainder,data]
         })
-
     }
 
     return(
         <React.Fragment>
-
             <CalendarStyled hourHeight={hourHeight}>
                 <div></div>
                 <Header currentDate={daysOnCal.currentDate}
@@ -117,8 +129,8 @@ export default function Calendar(){
                       updateEvent={updateEvent}
                 />
             </CalendarStyled>
-           {showNewJobModal && <NewJobModal addToEvents={addToEvents} toggleModal={toggleNewJobModal}/>}
-            {displayEvent && <JobDetailsModal displayEvent={displayEvent}/>}
+            {showNewJobModal && <NewJobModal addToEvents={addToEvents} toggleModal={toggleNewJobModal}/>}
+            {displayEvent && <JobModal displayEvent={displayEvent} close={closeDetailsModal} updateEvent={updateEvent}/>}
         </React.Fragment>
     )
 }

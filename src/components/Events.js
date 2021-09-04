@@ -1,5 +1,5 @@
 import Event from './Event'
-import {getTime,getNumPixels} from "../utilities/utilities";
+
 
 
 import {configure} from "../eventGeometry/eventGeometry";
@@ -35,6 +35,5 @@ export default function Events({events,updateEvent,updateDisplayEvent}) {
                     />
                 }
             )
-
     )
 }

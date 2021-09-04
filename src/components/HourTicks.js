@@ -1,4 +1,4 @@
-/*import Hours from "./Hours";*/
+
 import settingsContext from './Contexts'
 import React from "react";
 import styled from "styled-components";

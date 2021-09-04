@@ -1,12 +1,12 @@
 import React from "react";
-import {addToPixels} from "../utilities/utilities";
+
 import useDrag from "./useDrag";
 import styled from 'styled-components'
 import {editJob} from "../Model/Jobs";
 
 import {fromTop,fromBottom,roundToNearest} from "../utilities/utilities";
 import settingsContext from "./Contexts";
-import {setHours, setMinutes} from "date-fns";
+
 import {getTimeFromPosition} from '../utilities/timeConversions.js'
 import {mergeDateAndTime} from '../utilities/dateUtilities'
 import useDetectBottomEdge from "./useDetectBottomEdge";
@@ -39,7 +39,19 @@ export default function Event({
     const [bottom, setBottom] = React.useState(bottomProp)
     const {hourHeight} = React.useContext(settingsContext)
 
-    const {overEdge,handleMouseMove,handleMouseLeave} = useDetectBottomEdge()
+    React.useEffect(()=>{
+        setTop(topProp)
+        setBottom(bottomProp)
+    },[topProp,bottomProp])
+
+    /*
+    TODO: write code that doesnt need this comment to make sense, once you can figure out how to.
+    this is used to detect whehter mouse cursor is over bottom edge and its value is then used to set
+    correct cursor in css
+    it is also used as last arg to useDrag and is checked when the drag is started to see what
+    drag behaviour is used*/
+    const {isCursorOverEdgeState,handleMouseMove,handleMouseLeave} = useDetectBottomEdge()
+
 
     function startTime(top) {
         return getTimeFromPosition(top, hourHeight * 24)
@@ -57,7 +69,8 @@ export default function Event({
         initialTop.current = top
         initialBottom.current = bottom
         eventHeight.current =fromTop(bottom,24*hourHeight)-top
-    },[top,bottom])
+    },[top,bottom,hourHeight])
+
 
     const onDragBottomEdge = (translationY,movementY) => {
             const trackedBottom = initialBottom.current-translationY
@@ -75,7 +88,7 @@ export default function Event({
 
     const onDragEnd = (totalTranslationY) => {
         console.log(totalTranslationY)
-        if(totalTranslationY!=0){//TODO do i want to allow a little bit of movement then set back to original value if movement is small
+        if(totalTranslationY!==0){//TODO do i want to allow a little bit of movement then set back to original value if movement is small
             editJob({
                 _id, data:
                     {
@@ -92,17 +105,21 @@ export default function Event({
         }
     }
 
-    const drag = useDrag(onDragStart,onDragElement,onDragBottomEdge,onDragEnd,overEdge)
+
+    const drag = useDrag(onDragStart,onDragElement,onDragBottomEdge,onDragEnd,isCursorOverEdgeState)
 
 
     return (
         <StyledEvent data-component={'event'}
                      data-id={_id}
                      className='event'
-                     onMouseDown={(e)=>{drag(e)}}
+                     onMouseDown={(e)=>{
+                         drag(e)
+                     }
+                     }
                      onMouseMove={handleMouseMove}
                      onMouseLeave={handleMouseLeave}
-                     overEdge={overEdge}
+                     overEdge={isCursorOverEdgeState}
                      draggable='false'
 
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import {Card,CardContent} from "@material-ui/core";
+
 
 const BackGround = styled.div`
   position: fixed;
@@ -14,10 +14,12 @@ const BackGround = styled.div`
   align-items: center;
 `
 
+/*
 const ModalStyled = styled.div`
   background-color: white;
   padding: 1.5em;
 `
+*/
 
 export default function Modal({children}){
     return (

@@ -1,5 +1,5 @@
 import React from "react";
-import {getNumPixels} from "../utilities/utilities";
+
 
 /*
 function reducer(state,action){
@@ -78,7 +78,7 @@ export default function useDrag(mouseMoveF,mouseUpF){
 */
 
 
-function reducer(state,action){
+/*function reducer(state,action){
     if(action.type==='down'){
         return{
             ...state,
@@ -98,7 +98,7 @@ function reducer(state,action){
             listening: false
         }
     }
-}
+}*/
 
 
 export default function useDrag(onDragStart,dragElementF,dragBottomEdgeF,mouseUpF,overEdge){

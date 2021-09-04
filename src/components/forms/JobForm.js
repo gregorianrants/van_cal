@@ -32,31 +32,21 @@ function dateTimeFromInput(date, time) {
 
 
 
-export default function JobForm({onSave,addToEvents,toggleModal}){
-    const summary = useInput()
-    const location = useInput()
-    const [dateValue,setDateValue] = React.useState(new Date())
-    const [startValue,setStartValue] = React.useState(new Date())
-    const [endValue,setEndValue] = React.useState(new Date())
-    const description = useInput()
+export default function JobForm({handleSubmit,toggleModal,initialValues}){
+    console.log(initialValues)
+    const summary = useInput(initialValues?.summary)
+    const location = useInput(initialValues?.location)
+    const [dateValue,setDateValue] = React.useState(initialValues?.start || new Date())
+    const [startValue,setStartValue] = React.useState(initialValues?.start || new Date())
+    const [endValue,setEndValue] = React.useState(initialValues?.end || new Date())
+    const description = useInput(initialValues?.description)
 
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const data = {
-            summary: summary.value,
-            location: location.value,
-            start: dateTimeFromInput(dateValue, startValue),
-            end: dateTimeFromInput(dateValue, endValue),
-            description: description.value,
-        }
-        onSave(data)
-            .then((calEvent)=>{
-                console.log(calEvent)
-                addToEvents(calEvent)
-                toggleModal()
-            })
-            .catch(console.error)
+    const data = {
+        summary: summary.value,
+        location: location.value,
+        start: dateTimeFromInput(dateValue, startValue),
+        end: dateTimeFromInput(dateValue, endValue),
+        description: description.value,
     }
 
 
@@ -99,7 +89,11 @@ export default function JobForm({onSave,addToEvents,toggleModal}){
                         <TextField label='description' {...description} fullWidth/>
                     </Grid>
                     <Grid item>
-                        <Button onClick={handleSubmit} variant='contained' color='primary' fullWidth>save</Button>
+                        <Button onClick={
+                            (e)=>{e.preventDefault()
+                                handleSubmit(data)
+                            }
+                        } variant='contained' color='primary' fullWidth>save</Button>
                     </Grid>
 
                 </Grid>
