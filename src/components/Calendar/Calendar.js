@@ -34,7 +34,10 @@ export default function Calendar(){
     const [showNewJobModal,setShowNewJobModal]=React.useState(false)
     const [displayEvent,setDisplayEvent]=React.useState(null)
     const [events,setEvents]=React.useState([])
+    const [gcalEvents,setGcalEvents]=React.useState([])
     //TODO have a think about what you are using/nameing current day. what does that mean
+
+    console.log('hello',gcalEvents)
 
     const {authed,listEvents,signOut} = useGapi()
 
@@ -44,9 +47,6 @@ export default function Calendar(){
         setDisplayEvent(events.filter(event=>event._id===id)[0])
     }
 
-    if(displayEvent){
-        console.log(displayEvent)
-    }
 
     React.useEffect(()=>{
         fetchDays(daysOnCal.firstDay,daysOnCal.lastDay)
@@ -59,7 +59,7 @@ export default function Calendar(){
     React.useEffect(()=>{
         if(authed){
             listEvents(daysOnCal.firstDay,daysOnCal.lastDay)
-                .then(console.log('its a promise'))
+                .then(setGcalEvents)
         }
 
         },
@@ -124,6 +124,7 @@ export default function Calendar(){
                 <DayLabels days={daysOnCal.days} />
                 <HourTicks/>
                 <Week events={events}
+                      gcalEvents={gcalEvents}
                       days={daysOnCal.days}
                       updateDisplayEvent={updateDisplayEvent}
                       updateEvent={updateEvent}

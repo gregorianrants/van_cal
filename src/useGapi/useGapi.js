@@ -1,11 +1,14 @@
 import React from 'react'
 import {add} from "date-fns";
+import {CLIENT_ID,API_KEY} from "./constants";
 
 import gapiEventType from './eventType'
 
+import {reshape} from './reshape'
+
 async function initClient(updateSigninStatus) {
-    var CLIENT_ID = '960665164291-hsqm8gr0imejuo32saj23bh50gr2i2u1.apps.googleusercontent.com';
-    var API_KEY = 'AIzaSyBt5R3UY5kDEUU6APsQK_z-MIfPtmGVZKo';
+    /*var CLIENT_ID = '960665164291-hsqm8gr0imejuo32saj23bh50gr2i2u1.apps.googleusercontent.com';
+    var API_KEY = process.env.API_KEY*/
     // Array of API discovery doc URLs for APIs used by the quickstart
     var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
     // Authorization scopes required by the API; multiple scopes can be
@@ -91,11 +94,11 @@ export function useGapi() {
             'orderBy': 'startTime'
         }).then(function (response) {
             const events = response.result.items;
-            /*console.log('FUCKKKKKKKKKKKKKKKKKKKK')*/
-           console.log(events.filter(
+            return events.filter(
                 event=>gapiEventType.isTimeSpecified(event) && !gapiEventType.isMultiDayTimeSpecified(event)
-            ))
-            return events
+                )
+                .map(event=>reshape(event))
+
         })
     }
 

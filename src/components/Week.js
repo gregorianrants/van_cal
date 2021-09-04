@@ -10,12 +10,13 @@ display: flex;
   
 `
 
-export default function Week({events,days,updateDisplayEvent,updateEvent}){
+export default function Week({gcalEvents,events,days,updateDisplayEvent,updateEvent}){
     return(
         //TODO: consider efficiency of filterning all events each time for each day, should i be using a map object instead
         <WeekStyled>
             {days.map((date,i) => (
                 <Day
+                    gcalEvents={gcalEvents}
                     events={events.filter(event => event.start.getDay() === date.getDay())}
                     key={i}
                     updateDisplayEvent={updateDisplayEvent}

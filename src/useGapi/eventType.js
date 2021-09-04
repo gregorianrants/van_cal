@@ -22,9 +22,6 @@ we want to filter out:
  calendar and makes sure we get the right number of each type of event.
  */
 
-
-
-
 const dateSpecified = {
     "kind": "calendar#event",
     "etag": "\"3261020895504000\"",
