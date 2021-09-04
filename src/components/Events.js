@@ -1,16 +1,19 @@
 import Event from './Event'
+import GcalEvent from "./gcalEvent";
 
 
 
 import {configure} from "../eventGeometry/eventGeometry";
 import React from "react";
 import settingsContext from "./Contexts";
+import {batchProcess} from "../utilities/batchProcess";
 
-export default function Events({events,updateEvent,updateDisplayEvent}) {
+export default function Events({gcalEvents,events,updateEvent,updateDisplayEvent}) {
     const {hourHeight}=React.useContext(settingsContext)
     const eventsGeometry = configure(hourHeight, 0)
         //TODO was initially counting border width into calculation but using
     //border box it doesnt mater consider refactor
+    console.log(events)
 
     //TODO super confusing changing this function up chain consider refactor
    /* const updateEventWithIdF = (id) => (
@@ -21,9 +24,11 @@ export default function Events({events,updateEvent,updateDisplayEvent}) {
         }
     )*/
 
+    const [eventsProcessed,gcalProcessed] = batchProcess(events,gcalEvents,eventsGeometry)
 
     return (
-        eventsGeometry(events)
+       /* eventsGeometry(events)*/
+            [...eventsProcessed
             .map(
                 (evnt, i) => {
                     return <Event
@@ -33,6 +38,22 @@ export default function Events({events,updateEvent,updateDisplayEvent}) {
                         updateDisplayEvent={updateDisplayEvent}
                     />
                 }
+            ),
+                ...gcalProcessed.map(
+                (evnt, i) => {
+                    return <GcalEvent
+                        {...evnt}
+                        key={evnt.id}
+                        updateEvent={updateEvent}
+                        updateDisplayEvent={updateDisplayEvent}
+                    />
+                }
             )
+
+
+
+            ]
+
+
     )
 }

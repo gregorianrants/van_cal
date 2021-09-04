@@ -13,7 +13,7 @@ function removeBatchProps(arr){
 
 
 
-function batchProcess(array1,array2,f){
+export function batchProcess(array1,array2,f){
     //TODO check objects dont already have a batch prop
 
     const result = f([...addBatchNumber(array1,1),...addBatchNumber(array2,2)])

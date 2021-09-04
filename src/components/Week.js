@@ -16,7 +16,7 @@ export default function Week({gcalEvents,events,days,updateDisplayEvent,updateEv
         <WeekStyled>
             {days.map((date,i) => (
                 <Day
-                    gcalEvents={gcalEvents}
+                    gcalEvents={gcalEvents.filter(event => event.start.getDay() === date.getDay())}
                     events={events.filter(event => event.start.getDay() === date.getDay())}
                     key={i}
                     updateDisplayEvent={updateDisplayEvent}
