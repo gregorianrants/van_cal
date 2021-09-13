@@ -35,7 +35,6 @@ async function initClient(updateSigninStatus) {
 
 }
 
-
 function load() {
     return new Promise(((resolve, reject) => {
         window.gapi.load('client:auth2',
@@ -50,14 +49,6 @@ function load() {
         )
     }))
 }
-
-
-
-
-
-
-
-
 
 export async function setUpGapi(updateSigninStatus) {
     /*if (!window.gapi) {
@@ -84,7 +75,6 @@ export function useGapi() {
     }, [])
 
     const listEvents = (from, to) => {
-
         return window.gapi.client.calendar.events.list({
             'calendarId': 'primary',
             'timeMin': from.toISOString(),
@@ -98,13 +88,13 @@ export function useGapi() {
                 event=>gapiEventType.isTimeSpecified(event) && !gapiEventType.isMultiDayTimeSpecified(event)
                 )
                 .map(event=>reshape(event))
-
         })
     }
 
-
     React.useEffect(() => {
+
         let cleanUpFunction
+
 
         (async ()=> {
             cleanUpFunction = await setUpGapi(updateSigninStatus)
