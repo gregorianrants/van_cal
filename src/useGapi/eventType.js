@@ -22,7 +22,7 @@ we want to filter out:
  calendar and makes sure we get the right number of each type of event.
  */
 
-const dateSpecified = {
+/*const dateSpecified = {
     "kind": "calendar#event",
     "etag": "\"3261020895504000\"",
     "id": "039cad35lth063o6uivusnvccu",
@@ -52,9 +52,9 @@ const dateSpecified = {
         "useDefault": false
     },
     "eventType": "default"
-}
+}*/
 
-const multiDayDateSpecified = {
+/*const multiDayDateSpecified = {
     "kind": "calendar#event",
     "etag": "\"3261021023538000\"",
     "id": "3lrk65s4vd3k7cjo9vj4n5egqm",
@@ -84,8 +84,9 @@ const multiDayDateSpecified = {
         "useDefault": false
     },
     "eventType": "default"
-}
+}*/
 
+/*
 const multiDayEventWithStartAndEndTime = {
     "kind": "calendar#event",
     "etag": "\"3261018162850000\"",
@@ -116,8 +117,9 @@ const multiDayEventWithStartAndEndTime = {
     },
     "eventType": "default"
 }
+*/
 
-const multiDayTimeSpecified = {
+/*const multiDayTimeSpecified = {
     "kind": "calendar#event",
     "etag": "\"3260332067908000\"",
     "id": "325o0j6skfd21p3i6sodahferh",
@@ -177,7 +179,7 @@ const multiDayTimeSpecified = {
         "useDefault": true
     },
     "eventType": "default"
-}
+}*/
 
 
 function isDateSpecified(event){
@@ -189,9 +191,6 @@ function isDateSpecified(event){
     return event.start.hasOwnProperty('date')
 }
 
-function isMultiDayDateSpecified(){
-
-}
 
 function isTimeSpecified(event){
     return !isDateSpecified(event)
@@ -208,7 +207,7 @@ function isMultiDayTimeSpecified(event){
 }
 
 
-console.log(isMultiDayTimeSpecified(multiDayTimeSpecified))
+/*console.log(isMultiDayTimeSpecified(multiDayTimeSpecified))*/
 
 module.exports =  {isTimeSpecified,isMultiDayTimeSpecified}
 

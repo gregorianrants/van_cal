@@ -23,13 +23,16 @@ export function createJob(job){
         body: JSON.stringify(job)
     }).then(res=>res.json())
         .then(res=>res.data)
-        .then(data=>(
-            {
-                ...data,
-                start: new Date(data.start),
-                end: new Date(data.end),//TODO create a function that does this
-            }
-        ))
+        .then(data=> {
+            console.log(data)
+            return (
+                {
+                    ...data,
+                    start: new Date(data.start),
+                    end: new Date(data.end),//TODO create a function that does this
+                }
+            )
+        })
         .catch(err=>console.error(err))
 }
 

@@ -25,6 +25,7 @@ export function batchProcess(array1,array2,f){
     return [removeBatchProps(batch1),removeBatchProps(batch2)]
 }
 
+/*
 const one = [{name: 'gregor'},{name: 'gregor'}]
 const two = [{name: 'jimmy'}]
 
@@ -34,3 +35,4 @@ function f(arr){
 
 
 console.log(batchProcess(one,two,f))
+*/

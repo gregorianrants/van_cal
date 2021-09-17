@@ -3,11 +3,21 @@ const mongoose = require('mongoose')
 
 
 const jobSchema = new mongoose.Schema({
-    summary: String,
-    location: String,
     start: Date,
     end: Date,
-    description: String,
+    customer: {
+        name: String,
+        mobile: Number,
+        email: String,
+    },
+    charges: {
+        hourlyRate: Number,
+        fuelCharge: Number,
+        travelTime: Number,
+    },
+    operatives: [],
+    items: [],
+    addresses: []
 })
 
 let Job =  mongoose.model('Job',jobSchema,'jobs')

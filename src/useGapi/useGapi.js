@@ -55,7 +55,7 @@ export async function setUpGapi(updateSigninStatus) {
         throw new Error('gapi needs to be loaded on script tag from: https://apis.google.com/js/api.js')
     }*/
     await load()
-    const cleanUp = await initClient(updateSigninStatus)
+    await initClient(updateSigninStatus)
     if (!window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
         window.gapi.auth2.getAuthInstance().signIn();
     }
@@ -121,7 +121,7 @@ export function EventsList() {
                 .then(setEvents)
         }
 
-    }, [authed])
+    }, [authed,listEvents])
 
     return (
         <div className="App">

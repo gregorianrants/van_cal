@@ -2,7 +2,7 @@ import React from "react";
 
 
 import styled from 'styled-components'
-import settingsContext from "./Contexts";
+
 
 
 const StyledEvent = styled.div`
@@ -26,7 +26,7 @@ export default function GcalEvent({
 
     const [top, setTop] = React.useState(topProp)
     const [bottom, setBottom] = React.useState(bottomProp)
-    const {hourHeight} = React.useContext(settingsContext)
+    //const {hourHeight} = React.useContext(settingsContext)
 
     React.useEffect(()=>{
         setTop(topProp)

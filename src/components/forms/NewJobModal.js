@@ -20,7 +20,7 @@ export default function NewJobModal({addToEvents,toggleModal,data}) {
 
     return (
         <Modal>
-            <Card style={{width: 300}}>
+            <Card style={{width: 600}}>
                 <CardContent>
                     <JobForm handleSubmit={handleSubmit}
                              addToEvents={addToEvents}

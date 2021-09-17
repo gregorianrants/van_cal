@@ -4,14 +4,6 @@ import JobForm from './JobForm'
 
 
 
-
-
-
-
-
-
-
-
 export default function EditJobForm({updateEvent,close,toggleModal,initialValues}) {
     const handleSubmit = (_id,data) => {
         console.log(data)

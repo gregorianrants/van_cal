@@ -37,9 +37,8 @@ export default function Calendar(){
     const [gcalEvents,setGcalEvents]=React.useState([])
     //TODO have a think about what you are using/nameing current day. what does that mean
 
-    console.log('hello',gcalEvents)
-
-    const {authed,listEvents,signOut} = useGapi()
+    //useGapi also returns a sign out function
+    const {authed,listEvents} = useGapi()
 
     const {hourHeight}=React.useContext(settingsContext)
 
@@ -58,12 +57,14 @@ export default function Calendar(){
 
     React.useEffect(()=>{
         if(authed){
-            listEvents(daysOnCal.firstDay,daysOnCal.lastDay)
+            listEvents(daysOnCal.firstDay,daysOnCal.lastDay)  //TODO should technically be a dependancy need to wrap it in useCallback
                 .then(setGcalEvents)
+
+            console.log('aggghhhh')
         }
 
         },
-        [authed,daysOnCal])
+        [authed,daysOnCal])//added in the listEvebts due to a warning in conslol
 
   /*  React.useEffect(()=>{
         const socket = socketIOClient('http://localhost:8000');
@@ -113,6 +114,7 @@ export default function Calendar(){
 
     return(
         <React.Fragment>
+
             <CalendarStyled hourHeight={hourHeight}>
                 <div></div>
                 <Header currentDate={daysOnCal.currentDate}

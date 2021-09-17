@@ -13,7 +13,6 @@ export default function Events({gcalEvents,events,updateEvent,updateDisplayEvent
     const eventsGeometry = configure(hourHeight, 0)
         //TODO was initially counting border width into calculation but using
     //border box it doesnt mater consider refactor
-    console.log(events)
 
     //TODO super confusing changing this function up chain consider refactor
    /* const updateEventWithIdF = (id) => (
