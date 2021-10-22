@@ -26,6 +26,10 @@ import {
 
 import { Typography } from "@material-ui/core";
 
+import { jobSchema } from "api/model/job";
+
+console.log(jobSchema);
+
 function dateTimeFromInput(date, time) {
   const hours = time.getHours();
   const minutes = time.getMinutes();
@@ -217,7 +221,7 @@ export default function JobForm({
           <ListBuilder
             value={props.values.operatives}
             onChange={props.handleChange}
-            label='add operative'
+            label="add operative"
             name="operatives"
           />
 

@@ -175,7 +175,7 @@ export default function JobModal({ displayEvent, close, updateEvent }) {
                     <CardContent className={classes.items}>{items}</CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={4}>
+                {/* <Grid item xs={4}>
                   <Card className={classes.card}>
                     <CardHeader title={"Removal Operatives"}></CardHeader>
                     <CardContent>
@@ -201,7 +201,7 @@ export default function JobModal({ displayEvent, close, updateEvent }) {
                       </List>
                     </CardContent>
                   </Card>
-                </Grid>
+                </Grid> */}
               </Grid>
             </CardContent>
           </Card>
