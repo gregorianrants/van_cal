@@ -69,7 +69,7 @@ export default function GcalTile({
     const [bottom, setBottom] = React.useState(bottomProp)
     //const {hourHeight} = React.useContext(settingsContext)
 
-    const operatives = attendees.filter(attendee=>!(attendee.organizer===true))
+    const operatives = attendees?.filter(attendee=>!(attendee.organizer===true))
 
     console.log(operatives)
 
