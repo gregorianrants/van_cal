@@ -53,6 +53,11 @@
   client data does not match server data?
 -have a look at the todo in the revokeAuth function in gcalController
 - make sure api isnt returning fields that should be private e.g. userid access tokens etc
+- change z order of dragged tile to allways be on top.
+- tiles that have same end/start are being counted as same overlaps group as the tile 
+  they share end/start with.
+- should i make fake data have some overlapping events?
+- add a button to remove fake data.
 # General Notes
 
 -this article suggested an api reponse shape that i liked  

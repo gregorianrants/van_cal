@@ -9,7 +9,7 @@ import {nextDay} from 'date-fns';
 const customerObj = {
     name: {
         type: String,
-        required: true,
+        required: [true,'name is required'],
         validate: [
             {
                 validator: (v) => {
@@ -88,11 +88,11 @@ const jobObj = {
     },
     start: {
         type: Date,
-        required: true,
+        required: [true,'start is required'],
     },
     end: {
         type: Date,
-        required: true,
+        required: [true,'end is required'],
     },
     customer: customerObj,
     charges: chargesObj,

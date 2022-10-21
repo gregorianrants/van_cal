@@ -28,6 +28,7 @@ import { jobSchema } from "api/model/job"; //TODO change name of buildSchema
 
 import { processMongooseError } from "../../utilities/processMongooseError";
 import {useHistory, useLocation} from "react-router-dom";
+import AddBoxIcon from "@material-ui/icons/AddBox";
 
 //es6 import was casuing a bug when building
 //const { processMongooseError } = require("../../utilities/processMongooseError")
@@ -152,6 +153,7 @@ export default function JobForm({ initialValues={}, title, handleSubmit, schema 
             initialValues={mergeLeft(initialValues,initial)}//merge mutates the second arg! hence the cloneDeep
             onSubmit={handleSubmit}
             validate={validator}
+            autocomplete='nope'
           >
             {({touched,
                 handleSubmit,
@@ -161,7 +163,7 @@ export default function JobForm({ initialValues={}, title, handleSubmit, schema 
               handleChange,setFieldTouched}) => {
               return (
                   //<Typography variant="h4">Create Job</Typography>
-                  <Form onSubmit={handleSubmit}  autocomplete="off">
+                  <Form onSubmit={handleSubmit} autocomplete='new-password'>
                     <Field
                         as={TextField}
                         className={classes.inputRow}
@@ -245,6 +247,7 @@ export default function JobForm({ initialValues={}, title, handleSubmit, schema 
 
                     <FlexRow className={classes.inputRow}>
                       <Field
+                          autoComplete='nope'
                           className={classes.flexItem}
                           as={TextField}
                           name="charges.hourlyRate"
@@ -254,6 +257,7 @@ export default function JobForm({ initialValues={}, title, handleSubmit, schema 
                           fullWidth
                       />
                       <Field
+                          autoComplete='nope'
                           className={classes.flexItem}
                           as={TextField}
                           name="charges.fuelCharge"
@@ -263,6 +267,7 @@ export default function JobForm({ initialValues={}, title, handleSubmit, schema 
                           fullWidth
                       />
                       <Field
+                          autoComplete='nope'
                           className={classes.flexItem}
                           as={TextField}
                           name="charges.travelTime"
