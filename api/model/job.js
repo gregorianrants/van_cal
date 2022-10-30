@@ -70,7 +70,9 @@ async function list({ from, to, skip, limit, invoiceState=null, sub }) {
 
 
   if((typeof skip!=='undefined') && (typeof limit!=='undefined')){
-    query.limit(Number(limit))
+    query
+        .sort({start: -1})
+        .limit(Number(limit))
         .skip(Number(skip))
   }
   let items = await query.populate('invoices');
