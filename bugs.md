@@ -58,6 +58,7 @@
   they share end/start with.
 - should i make fake data have some overlapping events?
 - add a button to remove fake data.
+- am i returning some fields on documents that should be removed for security reasons.
 # General Notes
 
 -this article suggested an api reponse shape that i liked  

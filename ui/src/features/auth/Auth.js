@@ -23,7 +23,6 @@ export default function Auth() {
     console.log("state your conde", code, state);
 
     if (code && state) {
-      console.log("fuck off");
       dispatch(handleRedirectThunk({ code, state }));
     }
   }, [dispatch,query]);//added these as per error message
